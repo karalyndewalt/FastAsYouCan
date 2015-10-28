@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <h1>Run Calculator</h1>
+
+<!-- I think I want to store all this information in a session. User could 
+have access to mulitple VO2 values from different races without re submitting the 
+form. would return on same page "with your 'race/time' we determind your vo2 to 
+be %session would you like to generate a training calendar?" and a button 
+"use ___vo2 to generate calander" 
+couled resubmit form and and make more buttons.
+
+-->
+
+        <div>
+            <form action="">
+                Race distance: <br>
+                <input type="number" name="distance">
+                <br>
+                
+                Units: 
+                <input type="radio" name="units" value="miles"> miles
+                <input type="radio" name="units" value="km"> kilometers
+                <input type="radio" name="units" value="m"> meters
+                <br><br>
+
+                Finishing time: <br>
+                <input type="number" name="hours" placeholder="hh" id="hr" 
+                       value maxlength="2" min="0" max="59"> :
+                <input type="number" name="minutes" placeholder="mm" id="mm" size="3"
+                       min="0" max="59"> :
+                <input type="number" name="seconds" placeholder="ss" id="ss" size="3"
+                       min="0" max="59"> 
+
+                <br><br>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
+
+{% endblock %}
