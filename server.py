@@ -11,14 +11,20 @@ app = Flask(__name__)
 app.secret_key = "ABC"
 
 # so undefined variable in Jinga2 doesn't fail silently
-app.jinja_env.undefined = StrictUndefined
+# app.jinja_env.undefined = StrictUndefined
 
 
 @app.route("/")
 def index():
     """Homepage."""
 
+    # if request.method == "GET"
+
     return render_template("home.html")
+
+    # else:
+
+    #     return render_template("home.html", blah=blah)
 
 
 

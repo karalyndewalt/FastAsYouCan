@@ -3,7 +3,7 @@ import math
 
 
 def convert_distance_to_meters(distance, units):
-    """"Returns distance in meters
+    """"From user input returns distance in meters
 
     units passed through using radio buttons.
 
@@ -31,17 +31,55 @@ def convert_distance_to_meters(distance, units):
 
     return meters
 
-# TODO, looking at MapMyRun to see how to deal with passing in and limiting input
-def convert_to_minutes():
-    """Converts time to minutes as a decimal
 
-    test for hours to minutes
+def meters_to_miles(meters):
+    """Converts meters to miles
 
-    test for seconds to decimal
-    test for
+    >>> meters_to_miles(5000)
+    3.106863683249034
 
     """
-    pass
+    miles = meters / 1609.34
+    return miles
+
+
+def miles_to_meters(miles):
+    """Converts miles to meters
+
+    >>> miles_to_meters(3.1)
+    4988.954
+
+    """
+    meters = miles * 1609.34
+    return meters
+
+
+def hours_to_minutes(hours):
+    """returns hours given minutes
+
+    >>> hours_to_minutes(2)
+    120
+
+    """
+    minutes = hours * 60
+    return minutes
+
+
+def seconds_to_minutes(seconds):
+    """Returns minutes given seconds
+
+    >>> seconds_to_minutes(60)
+    1.0
+
+    >>> seconds_to_minutes(50)
+    0.8333333333333334
+
+    >>> seconds_to_minutes(90)
+    1.5
+
+    """
+    minutes = seconds / 60.0
+    return minutes
     # minutes = 0
     # multiply minutes by 60 ==> seconds
     # use modlus (%) to get seconds
@@ -94,7 +132,19 @@ def get_VO2_from_velocity(velocity):
     VO2 = -4.60 + 0.182258 * velocity + 0.000104 * velocity**2
     return VO2
 
-# todo velocity --> pace min/mile
+
+def velocity_to_min_per_mile(velocity):
+    """"""
+    pace = 1609.34 / velocity
+    # pace is in min/mile; min is a decimal
+    # seconds = int((pace * 60) % 60)
+    # # returns the seconds rounded down = faster time
+    # if seconds > 10:
+    #     seconds = "0{}".format(seconds)
+    # pace = str(pace).split(".")
+    # pace = "{}:{}".format(pace[0], seconds)
+    return pace
+
 
 def get_percent_VO2max(time):
     """Returns perctenage of VO2max
@@ -110,12 +160,28 @@ def get_percent_VO2max(time):
     return percent_VO2max
 
 
-def user_VO2max():
+def user_VDOT(distance, units, time):
     """Returns user VO2max
 
+    >>> user_VDOT(10, "kilometers", 35)
+    60.54544105206188
 
+
+    >>> user_VDOT(5000, "meters", 17)
+    60.160686884379935
+
+    >>> user_VDOT(2, "miles", 10.5)
+    60.741639616661146
 
     """
+    percent_VO2 = get_percent_VO2max(time)
+    # may need more calc for time, assuming all min for now
+    meters = convert_distance_to_meters(distance, units)
+    vel = velocity(meters, time)
+    race_VO2 = get_VO2_from_velocity(vel)
+
+    VDOT = race_VO2 / percent_VO2
+    return VDOT
 
 
 if __name__ == "__main__":
