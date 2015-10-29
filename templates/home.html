@@ -13,24 +13,21 @@ couled resubmit form and and make more buttons.
 -->
 
         <div>
-            <form action="">
+            <form action="/calculate-VDOT">
                 Race distance: <br>
-                <input type="number" name="distance">
+                <input type="number" id="rdist" name="distance">
                 <br>
                 
                 Units: 
                 <input type="radio" name="units" value="miles"> miles
-                <input type="radio" name="units" value="km"> kilometers
-                <input type="radio" name="units" value="m"> meters
+                <input type="radio" name="units" value="kilometers"> kilometers
+                <input type="radio" name="units" value="meters"> meters
                 <br><br>
 
                 Finishing time: <br>
-                <input type="number" name="hours" placeholder="hh" id="hr" 
-                       value maxlength="2" min="0" max="59"> :
-                <input type="number" name="minutes" placeholder="mm" id="mm" size="3"
-                       min="0" max="59"> :
-                <input type="number" name="seconds" placeholder="ss" id="ss" size="3"
-                       min="0" max="59"> 
+                <input type="number" name="hours" placeholder="hr" id="hr" min="0" max="59" defult="0">:
+                <input type="number" name="minutes" placeholder="mm" id="mm" size="3" min="0" max="59" default="0"> :
+                <input type="number" name="seconds" placeholder="ss" id="ss" size="3" min="0" max="59" default="0"> 
                 <br> <br>       
 
                 Max weekly milage: <br>

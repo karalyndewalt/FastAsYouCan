@@ -184,6 +184,21 @@ def user_VDOT(distance, units, time):
     return VDOT
 
 
+# examples of how to use datetime.timedelta
+# >>> hr = 1
+# >>> mm = 60
+# >>> ss = 3600
+# >>>
+# >>> minutes = datetime.timedelta(hours=hr, minutes=mm, seconds=ss)
+# >>> print minutes
+# 3:00:00
+# >>> race_time = 65.25
+# >>> datetime.timedelta(minutes=race_time)
+# datetime.timedelta(0, 3915)
+# >>> race_time = datetime.timedelta(minutes=race_time)
+# >>> print race_time
+# 1:05:15
+
 if __name__ == "__main__":
     import doctest
     doctest.testmod()
