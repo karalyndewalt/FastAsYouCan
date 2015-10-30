@@ -26,17 +26,17 @@ def index():
 
  #     return render_template("home.html", blah=blah)
 
-@app.route("/calculate-VDOT")
+@app.route("/calculate-VDOT", methods=["POST"])
 def create_table():
-    hr = float(request.args.get("hours"))
-    mm = float(request.args.get("minutes"))
-    ss = float(request.args.get("seconds"))
-    units = request.args.get("units")
-    distance = float(request.args.get("distance"))
-    mileage = float(request.args.get("mileage"))
+    hr = request.form.get("hours")
+    mm = request.form.get("minutes")
+    ss = request.form.get("seconds")
+    units = request.form.get("units")
+    distance = float(request.form.get("distance"))
+    mileage = float(request.form.get("mileage"))
 
     # have function in calculator.py (with doctest) would it be clear to call .calculator.function()?
-    time = mm + (hr * 60) + (ss / 60)
+    time = float(mm) + (float(hr) * 60) + (float(ss) / 60)
 
 
     VDOT = calculator.user_VDOT(distance, units, time)
