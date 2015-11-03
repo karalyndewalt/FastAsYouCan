@@ -32,7 +32,6 @@ class User(db.Model):
 
         return "Hello, {}".format(self.email)
 
-
     def __repr__(self):
         """Provide helpful representation when printed"""
 
@@ -54,6 +53,7 @@ class Race(db.Model):
 
     user = db.relationship("User", backref=db.backref("races", order_by=race_id))
 
+    # turn into a property, later
     def VDOT(self):
         """Return user VDOT"""
 
@@ -85,16 +85,20 @@ class Pace(object):
         self.intensity = intensity
 
     def pace_range(self):
-        intensity_tuple = PACE_DICT[self.intensity]
+        intensity_tuple = self.PACE_DICT[self.intensity]
         p_range = []
         for t in intensity_tuple:
             percent_VDOT = self.VDOT * t
             velocity = calculator.get_velocity_from_VO2(percent_VDOT)
             miles_per_min = velocity / 1609.34
             minutes_per_mile = timedelta(minutes=(1/miles_per_min))
-            p_range.append(miles_per_min)
+            p_range.append(minutes_per_mile)
         return p_range
 
+
+class Workouts(object):
+    """ stores workouts for Marthon training"""
+    pass
 
 
 

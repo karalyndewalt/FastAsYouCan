@@ -15,6 +15,41 @@ app.secret_key = "ABC"
 
 # so undefined variable in Jinga2 doesn't fail silently
 # app.jinja_env.undefined = StrictUndefined
+TRAINING_PLAN = [
+    (0.60, "Easy runs @ {easy} to meet mileage goals"),
+    (0.60, "Easy runs @ {easy} to meet mileage goals"),
+    (0.60, "Easy runs @ {easy} to meet mileage goals"),
+    (0.60, "Easy runs @ {easy} to meet mileage goals",
+     "Long run @ {easy}, distance: {0.162 * peakmileage} "),
+    (0.60, "Easy runs @ {easy} to meet mileage goals",
+     "Long run @ {easy}, distance: {0.162 * peakmileage} "),
+    (0.60, "Easy runs @ {easy} to meet mileage goals",
+     "Long run @ {easy}, distance: {0.162 * peakmileage} "),
+    (0.80, "Long run @ {easy}, distance: {0.216 * peakmileage} ",
+     "Tempo - 20 minutes @ {tempo} broken into 2 x 10 minutes with 1 minutes rest"),
+    (0.80, "Long run @ {easy}, distance: {0.216 * peakmileage} ",
+     "Tempo - 20 minutes @ {tempo} broken into 2 x 10 minutes with 1 minutes rest"),
+    (0.70, "Two Easy runs @ {easy}, total distance: {0.189 * peakmileage}",
+     "Tempo - 30 minutes @ {tempo} broken into 3 x 10 minutes with 1 minutes rest"),
+    (0.90, "Long run @ {easy}, distance: {0.243 * peakmileage} ",
+     "Tempo - 30 minutes @ {tempo} broken into 3 x 10 minutes with 1 minutes rest"),
+    (0.90, "Long run @ {easy}, distance: {0.243 * peakmileage} ",
+     "Tempo - 30 minutes @ {tempo} broken into 2 x 15 minutes with 1 minutes rest"),
+    (0.70, "Marathon run for 12 miles @ {marathon}. Finish with 5 to 6 20-30 second strides with 1 minutes rest.",
+     "Tempo - 30 minutes @ {tempo} broken into 2 x 15 minutes with 1 minutes rest"),
+    (1.0, "Tempo 3 x 5 minutes @ {tempo}, with 1 minute rest. Easy ({easy}) for 60 minutes. Tempo 3 x 5 minutes @ {tempo}, with 1 minute rest. ",
+     "Tempo 2 x 10 minutes @ {tempo}, with 2 minute rest. Easy ({easy}) for 75 minutes."),
+    (0.90, "Marthon pace ({marathon}), for 15 miles.",
+     "Tempo 2 x 10 minutes @ {tempo}, with 2 minute rest. Easy ({easy}) for 75 minutes."),
+    (1.0, "Long run @ {easy}, distance: {0.25 * peakmileage} ",
+     "Tempo 2 x 10 minutes @ {tempo}, with 2 minute rest. Easy ({easy}) for 75 minutes."),
+    (0.80, "Tempo 3 x 5 minutes @ {tempo}, with 1 minute rest. Easy ({easy}) for 60 minutes. Tempo 3 x 5 minutes @ {tempo}, with 1 minute rest. ",
+     "Tempo 2 x 10 minutes @ {tempo}, with 2 minute rest. Easy ({easy}) for 75 minutes."),
+    (0.80, "Marathon pace ({marathon}) for 12 miles.",
+     "Easy pace ({easy}) for 2 miles. Tempo - 25 minutes @ {tempo} broken into 5 x 5 minutes with 1 minute rest"),
+    (0.60, "Two Easy runs @ {easy}, total distance: {0.162 * peakmileage}",
+     "Easy pace ({easy}) for 2 miles. Tempo - 25 minutes @ {tempo} broken into 5 x 5 minutes with 1 minute rest"),
+]
 
 
 @app.route("/")
@@ -31,6 +66,7 @@ def create_table():
     hr = request.form.get("hours")
     mm = request.form.get("minutes")
     ss = request.form.get("seconds")
+    mileage = float(request.form.get("mileage"))
     units = request.form.get("units")
     distance = float(request.form.get("distance"))
     email = request.form.get("email")
@@ -46,7 +82,7 @@ def create_table():
     # session["VDOT"] = VDOT
     # -------TODO--------
         # send distance and time to races tabel under user email/id
-    new_user = User(email=email)
+    new_user = User(email=email, weekly_mileage=mileage)
     db.session.add(new_user)
     db.session.commit()
 
@@ -60,8 +96,14 @@ def create_table():
 
     session["VDOT"] = new_race.VDOT()
 
-    return render_template("form-submit.html", VDOT=session["VDOT"])
+    return render_template("generate-calendar.html", VDOT=session["VDOT"])
 
+
+@app.route("/generate-calendar")
+def creat_calendar():
+    training_plan = TRAINING_PLAN
+
+    return render_template("training-plan.html", training_plan=training_plan)
 
 if __name__ == "__main__":
     #must set to true befor invoking DebugToolbarExtension

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %} 
+<h1>Training Program</h1>
+    
+        <ul> 
+            {% for week in training_plan %}
+                {% for i in week %}
+            <li>
+                {{ i }}
+            </li>
+        
+                {% endfor %}
+            {% endfor %}
+        </ul>
+{% endblock %}
+
+<!-- use for loop to populate; it will make the whole program, 18 weeks 
+for week in []
+    for i in tuple 
+        <li> = i  -->

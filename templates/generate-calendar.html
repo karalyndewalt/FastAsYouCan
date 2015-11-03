@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %} 
+
+<p>submitted</p>
+<br>
+<li>VDOT {{ VDOT }} </li> 
+
+<br> <br>
+
+<form action="/generate-calendar">
+    <input type="submit" value="Show Training Plan">
+</form>
+
+{% endblock %}
