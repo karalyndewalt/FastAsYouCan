@@ -91,8 +91,9 @@ class Pace(object):
             percent_VDOT = self.VDOT * t
             velocity = calculator.get_velocity_from_VO2(percent_VDOT)
             miles_per_min = velocity / 1609.34
-            minutes_per_mile = timedelta(minutes=(1/miles_per_min))
-            p_range.append(minutes_per_mile)
+            minutes_per_mile = 1 / miles_per_min
+            # minutes_per_mile = timedelta(minutes=(1/miles_per_min))
+            p_range.append(timedelta(minutes=minutes_per_mile))
         return p_range
 
 
