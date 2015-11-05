@@ -96,6 +96,25 @@ class Pace(object):
             p_range.append(timedelta(minutes=minutes_per_mile))
         return p_range
 
+    def convert_timedelta(self):
+        """Return list of pace times converted from timedelta object"""
+
+         #        >>> test = [1, 2, 3, 4, 5, 6, 7]
+         #        >>> test1 = test[-5:]
+         #        >>> print test1
+         #        >>> [3, 4, 5, 6, 7]
+         # rewrite using list comp, and time date method .total_seconds
+
+        p_range = self.pace_range()
+        time_range = []
+        for i in p_range:
+            time_str = str(i)
+            token_time = time_str.split(".")
+            time = token_time[0]
+            time = time[-5:]
+            time_range.append(time)
+        return time_range
+
 
 class Workouts(object):
     """ stores workouts for Marthon training"""
