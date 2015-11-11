@@ -176,6 +176,12 @@ class Training_Plan(object):
 
 # weeks is a list of Weeks
     def __init__(weeks):
+        # self.weeks = {
+        #               1: week1
+        #               2: week2
+        #         }
+
+        # would like this to be a dictionary/good, bad, ugly?
         # for Week in weeks:
             # key[#of week]: [week]
         pass
@@ -194,9 +200,27 @@ class Week(object):
 # if/else for empty list
     # if empty list (percent_peak_mileage/peakmileage)/days) = daily_dist
         # for each day create a segment @ Easy for distance= daily_dist
+# peakmileage = User.weekly_mileage, do not need this in the __init__ because
+# the Week will be called as a method from the User class
     def __init__(self, percent_peak_mileage, peakmileage, workouts, days=6):
+        #  percent_peak_mileage is specified for each TP, must pass in.
         self.percent_peak_mileage = percent_peak_mileage
-        self.peakmileage = peakmileage
+        # user_id from User class/instance, as class method
+        self.peakmileage = User.query.get(user_id).weekly_mileage
+        self.week_in_miles = (self.percent_peak_mileage * self.peakmileage)
+        self.workouts = workouts
+        self.days = days
+        # sum(workout.distance for workout in workouts) need to test this.
+        self.distance = sum()
+
+    # def create_remaining_days(self):
+        # """"""
+        # days = self.days - len(workouts)
+        # rem_dist = self.week_in_miles - self.distance
+        # distance = rem_dist/days
+        # for i in days:
+            # seg = Segment(EMT="easy", distance=distance)
+            # workouts.append(seg)
 
 
 class Workout(object):
@@ -215,6 +239,12 @@ class Workout(object):
             raise TypeError("whatever you want to say")
 
         self.segments = segments
+        self.distance = sum(seg.seg_distance() for seg in segments)
+        # distance = 0
+        # for seg in segments:
+        #     distance += seg.seg_distance()
+        # self.distance = distance
+        # self.distance = [distance for seg in segments distance += seg.seg_distance()]
         # may or may not want .distance as attribute, will be on segment and on Week
         # I think that this is just a handy container, still have access to all the attr of Segment
         # self.distance = sum of the items in segments (for i in segments, sum += seg.segment_distance)
@@ -240,11 +270,16 @@ class Segment(object):
         self.pace = Pace(VDOT, EMT)
         self.rep = rep
         self.time = time
+
         peakmileage = User.query.get(user_id).weekly_mileage
-        self.distance = distance or (distance_as_percent * peakmileage)
+
+        # self.distance = distance or (distance_as_percent * peakmileage)
         # TypeError: unsupported operand type(s) for *: 'NoneType' and 'int'
         # need to make if statement to avoid multiplying if it is a None type
-        # if type(distance_as_percent) not None: self.distance = (distance_as_percent * peakmileage)
+        if type(distance_as_percent) == int:
+            self.distance = (distance_as_percent * peakmileage)
+        else:
+            self.distance = distance
         self.rest = rest
 
     # # this should be an attribute of the class?? hermmm
