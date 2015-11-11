@@ -199,7 +199,7 @@ class Week(object):
         self.peakmileage = peakmileage
 
 
-class Workouts(object):
+class Workout(object):
     """Returns
 
     a single workout is a list of segments
@@ -211,50 +211,72 @@ class Workouts(object):
     # use segment.seg_distance() to get distance of workout.
     # FOR FUTURE: set of lists, for distance vs time --> 2.5hrs OR (|) 27% of mileage, which-ever is less
     def __init__(self, segments):
+        if not isinstance(segments, list):
+            raise TypeError("whatever you want to say")
+
         self.segments = segments
+        # may or may not want .distance as attribute, will be on segment and on Week
+        # I think that this is just a handy container, still have access to all the attr of Segment
+        # self.distance = sum of the items in segments (for i in segments, sum += seg.segment_distance)
 
 
-class Segments(object):
+class Segment(object):
     """Pace() and distance or time components of a workout"""
 
-    def __init__(self, pace, rep=None, time=None, distance=None, rest=None):
+    def __init__(self, EMT, rep=None, time=None, distance=None, distance_as_percent=0, rest=None, user_id=None):
         # pace >>> can/should this be an object of Pace()?
         # NTS ^ should probably just pass in the string and use that to call instance from User.
         # distance is always a percentage
         # want to pass the whole object through and just call the string_seg method to display
-        self.pace = pace
+        # EMT is the STRING: "easy", "marathon", or "tempo"
+        self.EMT = EMT
+        # when segment is called from the User class user_id will not need to be passed in?! ***for testing add user_id=None
+        self.user_id = user_id
+        # find most recent race to calculate VDOT from.
+        race = Race.query.filter(Race.user_id == self.user_id).order_by(Race.race_id.desc()).first()
+        # call Race instance method .VDOT
+        VDOT = race.VDOT()
+        # THIS BLOWS MY MIND! SO EFFING COOOOOOOOL!
+        self.pace = Pace(VDOT, EMT)
         self.rep = rep
         self.time = time
-        self.distance = distance
+        peakmileage = User.query.get(user_id).weekly_mileage
+        self.distance = distance or (distance_as_percent * peakmileage)
+        # TypeError: unsupported operand type(s) for *: 'NoneType' and 'int'
+        # need to make if statement to avoid multiplying if it is a None type
+        # if type(distance_as_percent) not None: self.distance = (distance_as_percent * peakmileage)
         self.rest = rest
 
-    def make_Pace(self):
-        """Makes instance of Pace()"""
-        pass
+    # # this should be an attribute of the class?? hermmm
+    # def make_Pace(self):
+    #     """Makes instance of Pace()"""
+    #     pass
 
-
-    # wait
+    # wait, this should be a __repr__ :/ or will get made in jinji or something.
     def string_seg(self):
         # probably need abstract Segments Class.... whoomp whoomp
         """Return string representation of a segment"""
-        segment = "{EMT} run, {pace},  ".format(EMT=self.pace, pace=())
+        segment = "{EMT} run, {pace},  ".format(EMT=self.EMT, pace=())
         # pace_type = user.easy_pace_obj or user.marathon_pace_obj or user.tempo_pace_obj
 
-    def seg_distnace(self):
+    def seg_distance(self):
+        """
+        >>> seg = Segment(EMT="tempo", time=20, user_id=34)
+        >>> vel_range = seg.pace.velocity()
+        >>> seg_distance = vel_range[1] * seg.time
+        >>> print seg_distance
+        >>> 5652.360938890108
+        """
         # needs to determine distance uses pace.velocity OR self.distance * time
-        pass
+        if self.time:
+            velocity_range = self.pace.velocity()
+            seg_distance = velocity_range[1] * self.time
 
-training_plan = Training_Plan()
-week1 = Week()
-workout1 = Workout()
-segment1 = Segment("easy", distance=10)
-segment2 = Segment("easy", distance=10)
-workout1.segments.append(segment1)
-workout1.segments.append(segment2)
-week1.workouts.apend(workout1)
-training_plan.weeks[1] = week1
+        else:
+            seg_distance = self.distance
+        return seg_distance
 
-segment1 = Segment(pace="easy", distance=10)
+
 
 ################################################################################
 # Helper Functions
