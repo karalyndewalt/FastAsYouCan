@@ -150,7 +150,7 @@ def creat_calendar():
     # see workspace.py for more "tests"
 
 
-    return render_template("training-plan.html", training_plan=user_plan)
+    return render_template("training-plan.html", training_plan=user.training_plan())
 
 if __name__ == "__main__":
     #must set to true befor invoking DebugToolbarExtension

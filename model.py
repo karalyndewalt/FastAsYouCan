@@ -31,6 +31,8 @@ class User(db.Model):
         """Greet using email"""
         return "Hello, {}".format(self.email)
 
+    # TODO(kara): colapse .emt_pace classes so that it takes (self, 'emt')
+    # allows changes in __init__ of Segment().
     def easy_pace(self):
         """Returns object of Pace class"""
 
@@ -64,6 +66,14 @@ class User(db.Model):
         # (__init__ on Pace (self, VDOT, intensity(as a string)))
         tempo_pace_obj = Pace(VDOT, "tempo")
         return tempo_pace_obj
+
+    def most_recent_race(self):
+        race = Race.query.filter(Race.user_id == self.user_id).order_by(Race.race_id.desc()).first()
+        return race
+
+    def training_plan(self):
+        return TrainingPlan(self)
+
 
     def __repr__(self):
         """Provide helpful representation when printed"""
@@ -170,21 +180,43 @@ class Pace(object):
             return string.format(self.intensity)
 
 
-# 6 days to start, could allow user specified num training days
-class Training_Plan(object):
+class TrainingPlan(object):
     """Returns dictionary of Weeks"""
 
 # weeks is a list of Weeks
-    def __init__(weeks):
-        # self.weeks = {
-        #               1: week1
-        #               2: week2
-        #         }
+    def __init__(self, user):
+        self.weeks = []
 
-        # would like this to be a dictionary/good, bad, ugly?
-        # for Week in weeks:
-            # key[#of week]: [week]
-        pass
+        # week 1 - 3
+        self.weeks.append(Week(user, 0.60, []))
+        self.weeks.append(Week(user, 0.60, []))
+        self.weeks.append(Week(user, 0.60, []))
+        # week 4 - 6
+        self.weeks.append(Week(user, .60, [
+            Workout([
+                Segment(emt='easy', distance_as_percent=0.162, user=user),
+                ])
+            ]))
+        self.weeks.append(Week(user, .60, [
+            Workout([
+                Segment(emt='easy', distance_as_percent=0.162, user=user),
+                ])
+            ]))
+        self.weeks.append(Week(user, .60, [
+            Workout([
+                Segment(emt='easy', distance_as_percent=0.162, user=user),
+                ])
+            ]))
+        # week 7
+        self.weeks.append(Week(user, .80, [
+            Workout([
+                Segment(emt='easy', distance_as_percent=0.216, user=user),
+                ]),
+            Workout([
+                # TODO(kara): rep*time = time.
+                Segment(emt='temp', rep=2, time=10, user=user),
+                ])
+            ]))
 
 
 class Week(object):
@@ -193,110 +225,109 @@ class Week(object):
     Uses user race.VDOT to determine distance of workouts, and remainder of
     peak mileage to assign distances to non-quality days.
     """
-# get user defined # of days to run/week
-# attributes: %ofpeakmileage, workouts, peakmileage
 # peakmileage should come from the User class. User.weekly_mileage
 # workouts - comes as a list, should only accept a list (even an empty one)
-# if/else for empty list
-    # if empty list (percent_peak_mileage/peakmileage)/days) = daily_dist
-        # for each day create a segment @ Easy for distance= daily_dist
 # peakmileage = User.weekly_mileage, do not need this in the __init__ because
 # the Week will be called as a method from the User class
-    def __init__(self, percent_peak_mileage, peakmileage, workouts, days=6):
+    def __init__(self, user, percent_peak_mileage, workouts, days=6):
         #  percent_peak_mileage is specified for each TP, must pass in.
         self.percent_peak_mileage = percent_peak_mileage
         # user_id from User class/instance, as class method
-        self.peakmileage = User.query.get(user_id).weekly_mileage
+        self.peakmileage = user.weekly_mileage
         self.week_in_miles = (self.percent_peak_mileage * self.peakmileage)
         self.workouts = workouts
         self.days = days
-        # sum(workout.distance for workout in workouts) need to test this.
-        self.distance = sum()
 
-    # def create_remaining_days(self):
-        # """"""
-        # days = self.days - len(workouts)
-        # rem_dist = self.week_in_miles - self.distance
-        # distance = rem_dist/days
-        # for i in days:
-            # seg = Segment(EMT="easy", distance=distance)
-            # workouts.append(seg)
+        self.quality_distance = sum(workout.distance for workout in workouts)
+
+    def create_remaining_days(self):
+        """Generate remaining training days"""
+
+        days = self.days - len(self.workouts)
+        rem_dist = self.week_in_miles - self.quality_distance
+        distance = rem_dist/days
+        for i in range(1, days):
+            seg = Segment(emt="easy", distance=distance)
+            self.workouts.append(seg)
 
 
 class Workout(object):
-    """Returns
+    """Returns list of segments
 
     a single workout is a list of segments
     'quality days', specific instructions for workouts with distance, time, pace attributes
     """
-    # pass in %peak_mileage and user.weekly_mileage
     # workout is a list of segments(plural), segments = [segment, segment, segment....]
-    # segments should only accept a []
+    # segments should only accept a list
     # use segment.seg_distance() to get distance of workout.
-    # FOR FUTURE: set of lists, for distance vs time --> 2.5hrs OR (|) 27% of mileage, which-ever is less
+
     def __init__(self, segments):
         if not isinstance(segments, list):
             raise TypeError("whatever you want to say")
 
         self.segments = segments
         self.distance = sum(seg.seg_distance() for seg in segments)
-        # distance = 0
-        # for seg in segments:
-        #     distance += seg.seg_distance()
-        # self.distance = distance
-        # self.distance = [distance for seg in segments distance += seg.seg_distance()]
-        # may or may not want .distance as attribute, will be on segment and on Week
-        # I think that this is just a handy container, still have access to all the attr of Segment
-        # self.distance = sum of the items in segments (for i in segments, sum += seg.segment_distance)
 
 
 class Segment(object):
     """Pace() and distance or time components of a workout"""
 
-    def __init__(self, EMT, rep=None, time=None, distance=None, distance_as_percent=0, rest=None, user_id=None):
-        # pace >>> can/should this be an object of Pace()?
-        # NTS ^ should probably just pass in the string and use that to call instance from User.
-        # distance is always a percentage
-        # want to pass the whole object through and just call the string_seg method to display
-        # EMT is the STRING: "easy", "marathon", or "tempo"
-        self.EMT = EMT
+    @classmethod
+    def from_percent(cls, emt, user, percent):
+        return cls(emt, user, percent * user.weekly_distance)
+
+    @classmethod
+    def from_time(cls, emt, user, time):
+        pace = user.magical_pace(emt)
+        distance = time * pace
+        return cls(emt, user, time)
+# TODO(kara):
+# make abstraction or class methods LATER
+# convert distance_in_miles to meters
+# think about default of time as 1
+    def __init__(self, emt, user, rep=1, time=None, distance_in_miles=None,
+                 distance_as_percent=None, rest=None):
+
+        # emt is the STRING: "easy", "marathon", or "tempo"
+        self.emt = emt
         # when segment is called from the User class user_id will not need to be passed in?! ***for testing add user_id=None
-        self.user_id = user_id
+        self.user = user
         # find most recent race to calculate VDOT from.
-        race = Race.query.filter(Race.user_id == self.user_id).order_by(Race.race_id.desc()).first()
+        race = user.most_recent_race()
         # call Race instance method .VDOT
         VDOT = race.VDOT()
-        # THIS BLOWS MY MIND! SO EFFING COOOOOOOOL!
-        self.pace = Pace(VDOT, EMT)
+        self.pace = Pace(VDOT, emt)
         self.rep = rep
         self.time = time
+        peakmileage = self.user.weekly_mileage
 
-        peakmileage = User.query.get(user_id).weekly_mileage
-
-        # self.distance = distance or (distance_as_percent * peakmileage)
-        # TypeError: unsupported operand type(s) for *: 'NoneType' and 'int'
-        # need to make if statement to avoid multiplying if it is a None type
-        if type(distance_as_percent) == int:
+        if distance_as_percent is not None:
             self.distance = (distance_as_percent * peakmileage)
         else:
-            self.distance = distance
+            # TODO(kara): invoke a calculator function to convert
+            # miles to meters, use calculator.py, it has doctests
+            # self.distance = distance_in_miles.calculator.miles_to_meters
+            pass
         self.rest = rest
 
-    # # this should be an attribute of the class?? hermmm
-    # def make_Pace(self):
-    #     """Makes instance of Pace()"""
+    # def other_format_method(self):
     #     pass
+    #     str(segment)
+    #     segment.other_format_method()
 
-    # wait, this should be a __repr__ :/ or will get made in jinji or something.
-    def string_seg(self):
-        # probably need abstract Segments Class.... whoomp whoomp
+    def __str__(self):
         """Return string representation of a segment"""
-        segment = "{EMT} run, {pace},  ".format(EMT=self.EMT, pace=())
+        segment = "{emt} run, {pace},  ".format(emt=self.emt, pace=())
         # pace_type = user.easy_pace_obj or user.marathon_pace_obj or user.tempo_pace_obj
 
+    def __repr__(self):
+        """Return string representation of segment"""
+
+        string = "<>"
+    
     def seg_distance(self):
         """
-        >>> seg = Segment(EMT="tempo", time=20, user_id=34)
+        >>> seg = Segment(emt="tempo", time=20, user_id=34)
         >>> vel_range = seg.pace.velocity()
         >>> seg_distance = vel_range[1] * seg.time
         >>> print seg_distance
