@@ -33,39 +33,52 @@ class User(db.Model):
 
     # TODO(kara): colapse .emt_pace classes so that it takes (self, 'emt')
     # allows changes in __init__ of Segment().
-    def easy_pace(self):
+        # will look like > self.pace = user.pace(self.emt)
+
+    # TODO(kara): change all 'emt' to 'intensity'
+
+    def paces(self, emt):
         """Returns object of Pace class"""
+        # finds users most recent race
+        most_recent_race = Race.query.filter(Race.user_id == self.user_id).order_by(Race.race_id.desc()).first()
+        # __init__ on Pace looks like: Pace(self, VDOT, intensity(as string))
+        VDOT = most_recent_race.VDOT()
+        pace_obj = Pace(VDOT, emt)
+        return pace_obj
 
-        # VDOT comes from Race, find most recent race by user_id query
-        race = Race.query.filter(Race.user_id == self.user_id).order_by(Race.race_id.desc()).first()
-        # call Race instance method .VDOT
-        VDOT = race.VDOT()
-        # (__init__ on Pace (self, VDOT, intensity(as a string)))
-        easy_pace_obj = Pace(VDOT, "easy")
-        return easy_pace_obj
+    # def easy_pace(self):
+    #     """Returns object of Pace class"""
 
-    def marathon_pace(self):
-        """Returns object of Pace class"""
+    #     # VDOT comes from Race, find most recent race by user_id query
+    #     race = Race.query.filter(Race.user_id == self.user_id).order_by(Race.race_id.desc()).first()
+    #     # call Race instance method .VDOT
+    #     VDOT = race.VDOT()
+    #     # (__init__ on Pace (self, VDOT, intensity(as a string)))
+    #     easy_pace_obj = Pace(VDOT, "easy")
+    #     return easy_pace_obj
 
-        # VDOT comes from Race, find most recent race by user_id query
-        race = Race.query.filter(Race.user_id == self.user_id).order_by(Race.race_id.desc()).first()
-        # call Race instance method .VDOT
-        VDOT = race.VDOT()
-        # (__init__ on Pace (self, VDOT, intensity(as a string)))
-        marathon_pace_obj = Pace(VDOT, "marathon")
+    # def marathon_pace(self):
+    #     """Returns object of Pace class"""
 
-        return marathon_pace_obj
+    #     # VDOT comes from Race, find most recent race by user_id query
+    #     race = Race.query.filter(Race.user_id == self.user_id).order_by(Race.race_id.desc()).first()
+    #     # call Race instance method .VDOT
+    #     VDOT = race.VDOT()
+    #     # (__init__ on Pace (self, VDOT, intensity(as a string)))
+    #     marathon_pace_obj = Pace(VDOT, "marathon")
 
-    def tempo_pace(self):
-        """Returns object of Pace class"""
+    #     return marathon_pace_obj
 
-        # VDOT comes from Race, find most recent race by user_id query
-        race = Race.query.filter(Race.user_id == self.user_id).order_by(Race.race_id.desc()).first()
-        # call Race instance method .VDOT
-        VDOT = race.VDOT()
-        # (__init__ on Pace (self, VDOT, intensity(as a string)))
-        tempo_pace_obj = Pace(VDOT, "tempo")
-        return tempo_pace_obj
+    # def tempo_pace(self):
+    #     """Returns object of Pace class"""
+
+    #     # VDOT comes from Race, find most recent race by user_id query
+    #     race = Race.query.filter(Race.user_id == self.user_id).order_by(Race.race_id.desc()).first()
+    #     # call Race instance method .VDOT
+    #     VDOT = race.VDOT()
+    #     # (__init__ on Pace (self, VDOT, intensity(as a string)))
+    #     tempo_pace_obj = Pace(VDOT, "tempo")
+    #     return tempo_pace_obj
 
     def most_recent_race(self):
         race = Race.query.filter(Race.user_id == self.user_id).order_by(Race.race_id.desc()).first()
@@ -292,11 +305,13 @@ class Segment(object):
         self.emt = emt
         # when segment is called from the User class user_id will not need to be passed in?! ***for testing add user_id=None
         self.user = user
-        # find most recent race to calculate VDOT from.
-        race = user.most_recent_race()
-        # call Race instance method .VDOT
-        VDOT = race.VDOT()
-        self.pace = Pace(VDOT, emt)
+        # # find most recent race to calculate VDOT from.
+        # race = user.most_recent_race()
+        # # call Race instance method .VDOT
+        # VDOT = race.VDOT()
+        # self.pace = Pace(VDOT, emt)
+        # # should use method from user instead of above > SEE USER.paces()
+        self.pace = user.paces(self.emt)
         self.rep = rep
         self.time = time
         peakmileage = self.user.weekly_mileage
@@ -306,8 +321,8 @@ class Segment(object):
         else:
             # TODO(kara): invoke a calculator function to convert
             # miles to meters, use calculator.py, it has doctests
-            # self.distance = distance_in_miles.calculator.miles_to_meters
-            pass
+            self.distance = distance_in_miles.calculator.miles_to_meters
+
         self.rest = rest
 
     # def other_format_method(self):
