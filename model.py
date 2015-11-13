@@ -159,29 +159,141 @@ class TrainingPlan(object):
         self.weeks.append(Week(user, 0.60, []))
         self.weeks.append(Week(user, 0.60, []))
         # week 4 - 6
-        self.weeks.append(Week(user, .60, [
+        self.weeks.append(Week(user, 0.60, [
             Workout([
-                Segment(emt='easy', distance_as_percent=0.162, user=user),
+                Segment(emt='easy', user=user, distance_as_percent=0.162)
                 ])
             ]))
-        self.weeks.append(Week(user, .60, [
+        self.weeks.append(Week(user, 0.60, [
             Workout([
-                Segment(emt='easy', distance_as_percent=0.162, user=user),
+                Segment(emt='easy', user=user, distance_as_percent=0.162)
                 ])
             ]))
-        self.weeks.append(Week(user, .60, [
+        self.weeks.append(Week(user, 0.60, [
             Workout([
-                Segment(emt='easy', distance_as_percent=0.162, user=user),
+                Segment(emt='easy', user=user, distance_as_percent=0.162)
                 ])
             ]))
-        # week 7
-        self.weeks.append(Week(user, .80, [
+        # weeks 7 & 8
+        self.weeks.append(Week(user, 0.80, [
             Workout([
-                Segment(emt='easy', distance_as_percent=0.216, user=user),
+                Segment(emt='easy', user=user, distance_as_percent=0.216)
                 ]),
             Workout([
                 # TODO(kara): rep*time = time.
-                Segment(emt='tempo', rep=2, time=10, user=user),
+                Segment(emt='tempo', user=user, rep=2, time=10, rest=1),
+                ])
+            ]))
+        self.weeks.append(Week(user, 0.80, [
+            Workout([
+                Segment(emt='easy', user=user, distance_as_percent=0.216)
+                ]),
+            Workout([
+                Segment(emt='tempo', user=user, rep=2, time=10, rest=1),
+                ])
+            ]))
+        # week 9
+        self.weeks.append(Week(user, 0.70, [
+            Workout([
+                Segment(emt='easy', user=user, distance_as_percent=0.0945),
+                Segment(emt='easy', user=user, distance_as_percent=0.0945)
+                ]),
+            Workout([
+                Segment(emt='tempo', user=user, rep=2, time=15, rest=1)
+                ])
+            ]))
+        # week 10 and 11
+        self.weeks.append(Week(user, 0.90, [
+            Workout([
+                Segment(emt='easy', user=user, distance_as_percent=0.243)
+                ]),
+            Workout([
+                Segment(emt='tempo', user=user, rep=3, time=10, rest=1)
+                ])
+            ]))
+        self.weeks.append(Week(user, 0.90, [
+            Workout([
+                Segment(emt='easy', user=user, distance_as_percent=0.243)
+                ]),
+            Workout([
+                Segment(emt='tempo', user=user, rep=3, time=10, rest=1)
+                ])
+            ]))
+        # week 12
+        self.weeks.append(Week(user, 0.70, [
+            Workout([
+                # TODO(kara): add strides: [rep, time]
+                Segment(emt='marathon', user=user, distance_in_miles=12)
+                ]),
+            Workout([
+                Segment(emt='tempo', user=user, rep=2, time=15, rest=1)
+                ])
+            ]))
+        # week 13
+        self.weeks.append(Week(user, 1.0, [
+            Workout([
+                Segment(emt='tempo', user=user, rep=3, time=5, rest=1),
+                Segment(emt='easy', user=user, time=60),
+                Segment(emt='tempo', user=user, rep=3, time=5, rest=1)
+                ]),
+            Workout([
+                Segment(emt='tempo', user=user, rep=2, time=10, rest=2),
+                Segment(emt='easy', user=user, time=75)
+                ])
+            ]))
+        # week 14
+        self.weeks.append(Week(user, 0.90, [
+            Workout([
+                # TODO(kara): add strides: [rep, time]
+                Segment(emt='marathon', user=user, distance_in_miles=15)
+                ]),
+            Workout([
+                Segment(emt='tempo', user=user, rep=2, time=10, rest=2),
+                Segment(emt='easy', user=user, time=75)
+                ])
+            ]))
+        # week 15
+        self.weeks.append(Week(user, 1.0, [
+            Workout([
+                Segment(emt='easy', user=user, distance_as_percent=0.25)
+                ]),
+            Workout([
+                Segment(emt='tempo', user=user, rep=2, time=10, rest=2),
+                Segment(emt='easy', user=user, time=75)
+                ])
+            ]))
+        # week 16
+        self.weeks.append(Week(user, 0.80, [
+            Workout([
+                Segment(emt='tempo', user=user, rep=3, time=5, rest=1),
+                Segment(emt='easy', user=user, time=60),
+                Segment(emt='tempo', user=user, rep=3, time=5, rest=1)
+                ]),
+            Workout([
+                Segment(emt='tempo', user=user, rep=2, time=10, rest=2),
+                Segment(emt='easy', user=user, time=75)
+                ])
+            ]))
+        # week 17
+        self.weeks.append(Week(user, 0.80, [
+            Workout([
+                # TODO(kara): add strides: [rep, time]
+                Segment(emt='marathon', user=user, distance_in_miles=12)
+                ]),
+            Workout([
+                Segment(emt='easy', user=user, distance_in_miles=2),
+                Segment(emt='tempo', user=user, rep=5, time=5, rest=1)
+                ])
+            ]))
+        # week 18
+        self.weeks.append(Week(user, 0.60, [
+            Workout([
+                Segment(emt='easy', user=user, distance_as_percent=0.081),
+                Segment(emt='easy', user=user, distance_as_percent=0.081)
+                ]),
+            Workout([
+                Segment(emt='easy', user=user, distance_in_miles=2),
+                Segment(emt='tempo', user=user, rep=5, time=5, rest=1)
                 ])
             ]))
 
@@ -234,7 +346,6 @@ class Workout(object):
         #     raise TypeError("whatever you want to say")
 
         self.segments = segments
-        print "segments: ", segments
         self.distance = sum(seg.calc_distance() for seg in segments)
 
 
@@ -265,6 +376,8 @@ class Segment(object):
         self.pace = user.paces(self.emt)
         self.rep = rep
         self.time = time
+        if time:
+            self.total_time = time * rep
         peakmileage = self.user.weekly_mileage
 
         if distance_as_percent:
@@ -286,7 +399,7 @@ class Segment(object):
     def __repr__(self):
         """Return string representation of segment"""
 
-        string = "<Intensity: {}, reps: {}, time:{}, rest: {}>"
+        string = "<Intensity: {}, reps: {}, time: {}, rest: {}>"
         return string.format(self.emt, self.rep, self.time, self.rest)
 
     def calc_distance(self):
@@ -300,7 +413,7 @@ class Segment(object):
         # needs to determine distance uses pace.velocity OR self.distance * time
         if self.time:
             velocity_range = self.pace.velocity()
-            distance = velocity_range[1] * self.time
+            distance = velocity_range[1] * self.total_time
 
         else:
             distance = self.distance

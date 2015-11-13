@@ -121,7 +121,7 @@ def gen_training_plan(easy, marathon, tempo, peak_mileage):
     # and have nice access to them as individuals to pass into the training_plan
 
 @app.route("/generate-calendar")
-def creat_calendar():
+def create_calendar():
     # change this to call off the user_id when you have login conf.
     VDOT = session["VDOT"]
     user_id = session["user_id"]
