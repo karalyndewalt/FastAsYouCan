@@ -20,20 +20,11 @@ class User(db.Model):
 
     user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     email = db.Column(db.String(50), unique=True)
-    # distance is in meters -TODO!! will be removed when Race is routes are in place
-    # distance = db.Column(db.Integer, nullable=False)
-    # time is in minutes - TODO!! will be removed when Race is routes are in place
-    # time = db.Column(db.Integer, nullable=False)
-    # VDOT = db.Column(db.Integer, nullable=False)
     weekly_mileage = db.Column(db.Integer, nullable=True)
 
     def greet(self):
         """Greet using email"""
         return "Hello, {}".format(self.email)
-
-    # TODO(kara): colapse .emt_pace classes so that it takes (self, 'emt')
-    # allows changes in __init__ of Segment().
-        # will look like > self.pace = user.pace(self.emt)
 
     # TODO(kara): change all 'emt' to 'intensity'
 
@@ -46,47 +37,12 @@ class User(db.Model):
         pace_obj = Pace(VDOT, emt)
         return pace_obj
 
-    # def easy_pace(self):
-    #     """Returns object of Pace class"""
-
-    #     # VDOT comes from Race, find most recent race by user_id query
-    #     race = Race.query.filter(Race.user_id == self.user_id).order_by(Race.race_id.desc()).first()
-    #     # call Race instance method .VDOT
-    #     VDOT = race.VDOT()
-    #     # (__init__ on Pace (self, VDOT, intensity(as a string)))
-    #     easy_pace_obj = Pace(VDOT, "easy")
-    #     return easy_pace_obj
-
-    # def marathon_pace(self):
-    #     """Returns object of Pace class"""
-
-    #     # VDOT comes from Race, find most recent race by user_id query
-    #     race = Race.query.filter(Race.user_id == self.user_id).order_by(Race.race_id.desc()).first()
-    #     # call Race instance method .VDOT
-    #     VDOT = race.VDOT()
-    #     # (__init__ on Pace (self, VDOT, intensity(as a string)))
-    #     marathon_pace_obj = Pace(VDOT, "marathon")
-
-    #     return marathon_pace_obj
-
-    # def tempo_pace(self):
-    #     """Returns object of Pace class"""
-
-    #     # VDOT comes from Race, find most recent race by user_id query
-    #     race = Race.query.filter(Race.user_id == self.user_id).order_by(Race.race_id.desc()).first()
-    #     # call Race instance method .VDOT
-    #     VDOT = race.VDOT()
-    #     # (__init__ on Pace (self, VDOT, intensity(as a string)))
-    #     tempo_pace_obj = Pace(VDOT, "tempo")
-    #     return tempo_pace_obj
-
     def most_recent_race(self):
         race = Race.query.filter(Race.user_id == self.user_id).order_by(Race.race_id.desc()).first()
         return race
 
     def training_plan(self):
         return TrainingPlan(self)
-
 
     def __repr__(self):
         """Provide helpful representation when printed"""
@@ -172,7 +128,7 @@ class Pace(object):
          #        >>> test1 = test[-5:]
          #        >>> print test1
          #        >>> [3, 4, 5, 6, 7]
-         # rewrite using list comp, and time date method .total_seconds
+         # TODO(kara): rewrite using list comp, and time date method .total_seconds
 
         p_range = self.pace_range()
         time_range = []
@@ -184,12 +140,10 @@ class Pace(object):
             time_range.append(time)
         return time_range
 
-    # I don't know if there is a meaningful repr, the object is a tuple of
-    # percents of user VDOT.
     def __repr__(self):
             """Provide a useful representation when printed"""
 
-            string = "<Paces as VDOT percentage for {} range>"
+            string = "<Paces as tuple of VDOT percentage for {} intensity>"
             return string.format(self.intensity)
 
 
@@ -227,7 +181,7 @@ class TrainingPlan(object):
                 ]),
             Workout([
                 # TODO(kara): rep*time = time.
-                Segment(emt='temp', rep=2, time=10, user=user),
+                Segment(emt='tempo', rep=2, time=10, user=user),
                 ])
             ]))
 
@@ -238,7 +192,7 @@ class Week(object):
     Uses user race.VDOT to determine distance of workouts, and remainder of
     peak mileage to assign distances to non-quality days.
     """
-# peakmileage should come from the User class. User.weekly_mileage
+# TODO(kara): CLEAN - peakmileage should come from the User class. User.weekly_mileage
 # workouts - comes as a list, should only accept a list (even an empty one)
 # peakmileage = User.weekly_mileage, do not need this in the __init__ because
 # the Week will be called as a method from the User class
@@ -272,14 +226,16 @@ class Workout(object):
     """
     # workout is a list of segments(plural), segments = [segment, segment, segment....]
     # segments should only accept a list
-    # use segment.seg_distance() to get distance of workout.
+    # use segment.distance() to get distance of workout.
 
     def __init__(self, segments):
-        if not isinstance(segments, list):
-            raise TypeError("whatever you want to say")
+        # TODO(kara):
+        # if not isinstance(segments, list):
+        #     raise TypeError("whatever you want to say")
 
         self.segments = segments
-        self.distance = sum(seg.seg_distance() for seg in segments)
+        print "segments: ", segments
+        self.distance = sum(seg.calc_distance() for seg in segments)
 
 
 class Segment(object):
@@ -295,9 +251,9 @@ class Segment(object):
         distance = time * pace
         return cls(emt, user, time)
 # TODO(kara):
-# make abstraction or class methods LATER
-# convert distance_in_miles to meters
 # think about default of time as 1
+# make abstraction or class methods?? LATER
+
     def __init__(self, emt, user, rep=1, time=None, distance_in_miles=None,
                  distance_as_percent=None, rest=None):
 
@@ -305,57 +261,50 @@ class Segment(object):
         self.emt = emt
         # when segment is called from the User class user_id will not need to be passed in?! ***for testing add user_id=None
         self.user = user
-        # # find most recent race to calculate VDOT from.
-        # race = user.most_recent_race()
-        # # call Race instance method .VDOT
-        # VDOT = race.VDOT()
-        # self.pace = Pace(VDOT, emt)
-        # # should use method from user instead of above > SEE USER.paces()
+        # uses instance method from User class
         self.pace = user.paces(self.emt)
         self.rep = rep
         self.time = time
         peakmileage = self.user.weekly_mileage
 
-        if distance_as_percent is not None:
+        if distance_as_percent:
             self.distance = (distance_as_percent * peakmileage)
-        else:
+        if distance_in_miles:
             # TODO(kara): invoke a calculator function to convert
             # miles to meters, use calculator.py, it has doctests
-            self.distance = distance_in_miles.calculator.miles_to_meters
+            # do I need an abstraction of the distance class with conversion methods from
+            # calculator?
+            self.distance = calculator.miles_to_meters(distance_in_miles)
 
         self.rest = rest
 
-    # def other_format_method(self):
-    #     pass
-    #     str(segment)
-    #     segment.other_format_method()
-
-    def __str__(self):
-        """Return string representation of a segment"""
-        segment = "{emt} run, {pace},  ".format(emt=self.emt, pace=())
-        # pace_type = user.easy_pace_obj or user.marathon_pace_obj or user.tempo_pace_obj
+    # Don't know what TODO with this, given @classmethod or abstraction of the Segment class
+    # def __str__(self):
+    #     """Return string representation of a segment"""
+    #     segment = "{emt} run, {pace},  ".format(emt=self.emt, pace=())
 
     def __repr__(self):
         """Return string representation of segment"""
 
-        string = "<>"
-    
-    def seg_distance(self):
+        string = "<Intensity: {}, reps: {}, time:{}, rest: {}>"
+        return string.format(self.emt, self.rep, self.time, self.rest)
+
+    def calc_distance(self):
         """
         >>> seg = Segment(emt="tempo", time=20, user_id=34)
         >>> vel_range = seg.pace.velocity()
-        >>> seg_distance = vel_range[1] * seg.time
-        >>> print seg_distance
+        >>> distance = vel_range[1] * seg.time
+        >>> print distance
         >>> 5652.360938890108
         """
         # needs to determine distance uses pace.velocity OR self.distance * time
         if self.time:
             velocity_range = self.pace.velocity()
-            seg_distance = velocity_range[1] * self.time
+            distance = velocity_range[1] * self.time
 
         else:
-            seg_distance = self.distance
-        return seg_distance
+            distance = self.distance
+        return distance
 
 
 
