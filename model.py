@@ -327,7 +327,9 @@ class Week(object):
         distance = rem_dist/days
         for i in range(1, days):
             seg = Segment(emt="easy", distance=distance)
-            self.workouts.append(seg)
+            self.workouts.append([seg])
+            # TODO(kara, display/format): each generated segment needs
+            # to be in its own list, that is it needs to be a workout.
 
 
 class Workout(object):

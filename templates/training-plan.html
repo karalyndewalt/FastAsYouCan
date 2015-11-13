@@ -3,17 +3,19 @@
 {% block content %} 
 <h1>Training Program</h1>
     
-        <ul> 
-            {% for week in training_plan %}
-                            <!-- will use indexing to seprate out runs -->
-                {% for i in week %}
-            <li>
-                {{ i }}
-            </li>
         
+            <!--TODO(kara,userinput) use datetime="", reversed from "race-day" 
+            class="caldate" will come from datetimeformating (python, passed 
+            forward OR (later) hard-coded into the html and content can be moved/back independent of date.-->
+    <main>
+        <section>
+            {% for week in training_plan %}
+                {% for workout in week %}
+                    <time datetime="2015-07-26" class="blank"><span class="caldate">{{workout}}</span></time>
                 {% endfor %}
             {% endfor %}
-        </ul>
+        </section>
+    </main>
 {% endblock %}
 
 <!-- use for loop to populate; it will make the whole program, 18 weeks 
