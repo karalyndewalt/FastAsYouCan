@@ -68,6 +68,9 @@ def create_calendar():
 
     return render_template("training-plan.html", training_plan=training_plan.weeks)
 
+    # JOEL
+    return render_template("training-plan.html", training_plan=training_plan.weeks)
+
 if __name__ == "__main__":
     #must set to true befor invoking DebugToolbarExtension
     app.debug = True

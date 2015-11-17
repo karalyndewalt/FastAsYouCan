@@ -10,8 +10,9 @@
     <main>
         <section>
             {% for week in training_plan %}
+                workouts = week.workouts
                 {% for workout in week %}
-                    <time datetime="2015-07-26" class="blank"><span class="caldate">{{workout}}</span></time>
+                    <time datetime="2015-07-26" class="blank"><span class="caldate">{{ workout.show_workout() }}</span></time>
                 {% endfor %}
             {% endfor %}
         </section>

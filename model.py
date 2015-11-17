@@ -155,147 +155,143 @@ class TrainingPlan(object):
         self.weeks = []
 
         # week 1 - 3
-        self.weeks.append(Week(user, 0.60, []))
-        self.weeks.append(Week(user, 0.60, []))
-        self.weeks.append(Week(user, 0.60, []))
+        self.weeks.append(Week(user, 0.60, plan=self, workouts=()))
+        self.weeks.append(Week(user, 0.60, plan=self, workouts=()))
+        self.weeks.append(Week(user, 0.60, plan=self, workouts=()))
         # week 4 - 6
-        self.weeks.append(Week(user, 0.60, [
-            Workout([
-                Segment(emt='easy', user=user, distance_as_percent=0.162)
-                ])
-            ]))
-        self.weeks.append(Week(user, 0.60, [
-            Workout([
-                Segment(emt='easy', user=user, distance_as_percent=0.162)
-                ])
-            ]))
-        self.weeks.append(Week(user, 0.60, [
-            Workout([
-                Segment(emt='easy', user=user, distance_as_percent=0.162)
-                ])
-            ]))
+        self.weeks.append(Week(user, 0.60, plan=self, workouts=(
+            Workout(
+                Segment(emt='easy', user=user, distance_as_percent=0.162),
+            ),
+        )))
+        self.weeks.append(Week(user, 0.60, plan=self, workouts=(
+            Workout(
+                Segment(emt='easy', user=user, distance_as_percent=0.162),
+            ),
+        )))
+        self.weeks.append(Week(user, 0.60, plan=self, workouts=(
+            Workout(
+                Segment(emt='easy', user=user, distance_as_percent=0.162),
+            ),
+        )))
         # weeks 7 & 8
-        self.weeks.append(Week(user, 0.80, [
-            Workout([
-                Segment(emt='easy', user=user, distance_as_percent=0.216)
-                ]),
-            Workout([
-                # TODO(kara): rep*time = time.
+        self.weeks.append(Week(user, 0.80, plan=self, workouts=(
+            Workout(
+                Segment(emt='easy', user=user, distance_as_percent=0.216),
+                ),
+            Workout(
                 Segment(emt='tempo', user=user, rep=2, time=10, rest=1),
-                ])
-            ]))
-        self.weeks.append(Week(user, 0.80, [
-            Workout([
-                Segment(emt='easy', user=user, distance_as_percent=0.216)
-                ]),
-            Workout([
+            ),
+        )))
+        self.weeks.append(Week(user, 0.80, plan=self, workouts=(
+            Workout(
+                Segment(emt='easy', user=user, distance_as_percent=0.216),
+            ),
+            Workout(
                 Segment(emt='tempo', user=user, rep=2, time=10, rest=1),
-                ])
-            ]))
+            ),
+        )))
         # week 9
-        self.weeks.append(Week(user, 0.70, [
-            Workout([
+        self.weeks.append(Week(user, 0.70, plan=self, workouts=(
+            Workout(
                 Segment(emt='easy', user=user, distance_as_percent=0.0945),
-                Segment(emt='easy', user=user, distance_as_percent=0.0945)
-                ]),
-            Workout([
-                Segment(emt='tempo', user=user, rep=2, time=15, rest=1)
-                ])
-            ]))
+                Segment(emt='easy', user=user, distance_as_percent=0.0945),
+            ),
+            Workout(
+                Segment(emt='tempo', user=user, rep=2, time=15, rest=1),
+            ),
+        )))
         # week 10 and 11
-        self.weeks.append(Week(user, 0.90, [
-            Workout([
+        self.weeks.append(Week(user, 0.90, plan=self, workouts=(
+            Workout(
                 Segment(emt='easy', user=user, distance_as_percent=0.243)
-                ]),
-            Workout([
-                Segment(emt='tempo', user=user, rep=3, time=10, rest=1)
-                ])
-            ]))
-        self.weeks.append(Week(user, 0.90, [
-            Workout([
-                Segment(emt='easy', user=user, distance_as_percent=0.243)
-                ]),
-            Workout([
-                Segment(emt='tempo', user=user, rep=3, time=10, rest=1)
-                ])
-            ]))
+            ),
+            Workout(
+                Segment(emt='tempo', user=user, rep=3, time=10, rest=1),
+            ),
+        )))
+        self.weeks.append(Week(user, 0.90, plan=self, workouts=(
+            Workout(
+                Segment(emt='easy', user=user, distance_as_percent=0.243),
+            ),
+            Workout(
+                Segment(emt='tempo', user=user, rep=3, time=10, rest=1),
+            ),
+        )))
         # week 12
-        self.weeks.append(Week(user, 0.70, [
-            Workout([
-                # TODO(kara): add strides: [rep, time]
-                Segment(emt='marathon', user=user, distance_in_miles=12)
-                ]),
-            Workout([
-                Segment(emt='tempo', user=user, rep=2, time=15, rest=1)
-                ])
-            ]))
+        self.weeks.append(Week(user, 0.70, plan=self, workouts=(
+            Workout(
+                Segment(emt='marathon', user=user, distance_in_miles=12),
+            ),
+            Workout(
+                Segment(emt='tempo', user=user, rep=2, time=15, rest=1),
+            ),
+        )))
         # week 13
-        self.weeks.append(Week(user, 1.0, [
-            Workout([
+        self.weeks.append(Week(user, 1.0, plan=self, workouts=(
+            Workout(
                 Segment(emt='tempo', user=user, rep=3, time=5, rest=1),
                 Segment(emt='easy', user=user, time=60),
-                Segment(emt='tempo', user=user, rep=3, time=5, rest=1)
-                ]),
-            Workout([
+                Segment(emt='tempo', user=user, rep=3, time=5, rest=1),
+            ),
+            Workout(
                 Segment(emt='tempo', user=user, rep=2, time=10, rest=2),
                 Segment(emt='easy', user=user, time=75)
-                ])
-            ]))
+                ),
+        )))
         # week 14
-        self.weeks.append(Week(user, 0.90, [
-            Workout([
-                # TODO(kara): add strides: [rep, time]
-                Segment(emt='marathon', user=user, distance_in_miles=15)
-                ]),
-            Workout([
+        self.weeks.append(Week(user, 0.90, plan=self, workouts=(
+            Workout(
+                Segment(emt='marathon', user=user, distance_in_miles=15),
+            ),
+            Workout(
                 Segment(emt='tempo', user=user, rep=2, time=10, rest=2),
-                Segment(emt='easy', user=user, time=75)
-                ])
-            ]))
+                Segment(emt='easy', user=user, time=75),
+            ),
+        )))
         # week 15
-        self.weeks.append(Week(user, 1.0, [
-            Workout([
-                Segment(emt='easy', user=user, distance_as_percent=0.25)
-                ]),
-            Workout([
+        self.weeks.append(Week(user, 1.0, plan=self, workouts=(
+            Workout(
+                Segment(emt='easy', user=user, distance_as_percent=0.25),
+            ),
+            Workout(
                 Segment(emt='tempo', user=user, rep=2, time=10, rest=2),
-                Segment(emt='easy', user=user, time=75)
-                ])
-            ]))
+                Segment(emt='easy', user=user, time=75),
+            ),
+        )))
         # week 16
-        self.weeks.append(Week(user, 0.80, [
-            Workout([
+        self.weeks.append(Week(user, 0.80, plan=self, workouts=(
+            Workout(
                 Segment(emt='tempo', user=user, rep=3, time=5, rest=1),
                 Segment(emt='easy', user=user, time=60),
-                Segment(emt='tempo', user=user, rep=3, time=5, rest=1)
-                ]),
-            Workout([
+                Segment(emt='tempo', user=user, rep=3, time=5, rest=1),
+            ),
+            Workout(
                 Segment(emt='tempo', user=user, rep=2, time=10, rest=2),
-                Segment(emt='easy', user=user, time=75)
-                ])
-            ]))
+                Segment(emt='easy', user=user, time=75),
+            ),
+        )))
         # week 17
-        self.weeks.append(Week(user, 0.80, [
-            Workout([
-                # TODO(kara): add strides: [rep, time]
-                Segment(emt='marathon', user=user, distance_in_miles=12)
-                ]),
-            Workout([
+        self.weeks.append(Week(user, 0.80, plan=self, workouts=(
+            Workout(
+                Segment(emt='marathon', user=user, distance_in_miles=12),
+            ),
+            Workout(
                 Segment(emt='easy', user=user, distance_in_miles=2),
-                Segment(emt='tempo', user=user, rep=5, time=5, rest=1)
-                ])
-            ]))
+                Segment(emt='tempo', user=user, rep=5, time=5, rest=1),
+            ),
+        )))
         # week 18
-        self.weeks.append(Week(user, 0.60, [
-            Workout([
+        self.weeks.append(Week(user, 0.60, plan=self, workouts=(
+            Workout(
                 Segment(emt='easy', user=user, distance_as_percent=0.081),
-                Segment(emt='easy', user=user, distance_as_percent=0.081)
-                ]),
-            Workout([
+                Segment(emt='easy', user=user, distance_as_percent=0.081),
+            ),
+            Workout(
                 Segment(emt='easy', user=user, distance_in_miles=2),
-                Segment(emt='tempo', user=user, rep=5, time=5, rest=1)
-                ])
-            ]))
+                Segment(emt='tempo', user=user, rep=5, time=5, rest=1),
+            ),
+        )))
 
 
 class Week(object):
@@ -308,28 +304,36 @@ class Week(object):
 # workouts - comes as a list, should only accept a list (even an empty one)
 # peakmileage = User.weekly_mileage, do not need this in the __init__ because
 # the Week will be called as a method from the User class
-    def __init__(self, user, percent_peak_mileage, workouts, days=6):
+    def __init__(self, user, percent_peak_mileage, plan, workouts, days=6):
         #  percent_peak_mileage is specified for each TP, must pass in.
         self.percent_peak_mileage = percent_peak_mileage
         # user_id from User class/instance, as class method
-        self.peakmileage = user.weekly_mileage
-        self.week_in_miles = (self.percent_peak_mileage * self.peakmileage)
-        self.workouts = workouts
+        self.peakmileage = calculator.miles_to_meters(user.weekly_mileage)
+        self.week_in_meters = (self.percent_peak_mileage * self.peakmileage)
+        # self.week_in_miles = (self.percent_peak_mileage * self.peakmileage)
+        self.plan = plan
         self.days = days
-
         self.quality_distance = sum(workout.distance for workout in workouts)
+        self.workouts = self.create_remaining_days(workouts)
+        for workout in self.workouts:
+            workout.week = self
+        # print "WEEK DIST: ", self.distance
 
-    def create_remaining_days(self):
+    def create_remaining_days(self, workouts):
         """Generate remaining training days"""
 
-        days = self.days - len(self.workouts)
-        rem_dist = self.week_in_miles - self.quality_distance
+        days = self.days - len(workouts)
+        print "NUM days: ", days
+        print "week_in_meters: ", self.week_in_meters
+        print "quality_distance ", self.quality_distance
+        rem_dist = self.week_in_meters - self.quality_distance
         distance = rem_dist/days
-        for i in range(1, days):
-            seg = Segment(emt="easy", distance=distance)
-            self.workouts.append([seg])
-            # TODO(kara, display/format): each generated segment needs
-            # to be in its own list, that is it needs to be a workout.
+        for i in range(days):
+            seg = Segment(emt="easy", user=user)
+            seg.distance = distance
+            workout = Workout(seg)
+            workouts = workouts + (workout,)
+        return workouts
 
 
 class Workout(object):
@@ -342,32 +346,32 @@ class Workout(object):
     # segments should only accept a list
     # use segment.distance() to get distance of workout.
 
-    def __init__(self, segments):
+    def __init__(self, *segments):
         # TODO(kara):
         # if not isinstance(segments, list):
         #     raise TypeError("whatever you want to say")
 
         self.segments = segments
+        for segment in self.segments:
+            segment.workout = self
         self.distance = sum(seg.calc_distance() for seg in segments)
+        print"workout distance: ", self.distance
+        self.week = None
+
+    def show_workout(self):
+        for seg in self.segments:
+            seg.show_segment()
+        return "Workout Distance: ", self.distance
 
 
 class Segment(object):
     """Pace() and distance or time components of a workout"""
 
-    @classmethod
-    def from_percent(cls, emt, user, percent):
-        return cls(emt, user, percent * user.weekly_distance)
-
-    @classmethod
-    def from_time(cls, emt, user, time):
-        pace = user.magical_pace(emt)
-        distance = time * pace
-        return cls(emt, user, time)
 # TODO(kara):
 # think about default of time as 1
 # make abstraction or class methods?? LATER
 
-    def __init__(self, emt, user, rep=1, time=None, distance_in_miles=None,
+    def __init__(self, emt, user, workout=None, rep=1, time=None, distance_in_miles=None,
                  distance_as_percent=None, rest=None):
 
         # emt is the STRING: "easy", "marathon", or "tempo"
@@ -376,12 +380,14 @@ class Segment(object):
         self.user = user
         # uses instance method from User class
         self.pace = user.paces(self.emt)
+        # add bi-directional accountability, linked to parent instance
         self.rep = rep
         self.time = time
         if time:
             self.total_time = time * rep
+        self.rest = rest
+        self.workout = None
         peakmileage = self.user.weekly_mileage
-
         if distance_as_percent:
             self.distance = (distance_as_percent * peakmileage)
         if distance_in_miles:
@@ -391,26 +397,8 @@ class Segment(object):
             # calculator?
             self.distance = calculator.miles_to_meters(distance_in_miles)
 
-        self.rest = rest
-
-    # Don't know what TODO with this, given @classmethod or abstraction of the Segment class
-    # def __str__(self):
-    #     """Return string representation of a segment"""
-    #     segment = "{emt} run, {pace},  ".format(emt=self.emt, pace=())
-
-    def __repr__(self):
-        """Return string representation of segment"""
-
-        string = "<Intensity: {}, reps: {}, time: {}, rest: {}>"
-        return string.format(self.emt, self.rep, self.time, self.rest)
-
     def calc_distance(self):
         """
-        >>> seg = Segment(emt="tempo", time=20, user_id=34)
-        >>> vel_range = seg.pace.velocity()
-        >>> distance = vel_range[1] * seg.time
-        >>> print distance
-        >>> 5652.360938890108
         """
         # needs to determine distance uses pace.velocity OR self.distance * time
         if self.time:
@@ -420,6 +408,29 @@ class Segment(object):
         else:
             distance = self.distance
         return distance
+
+    # def length_workout(self):
+    #     for seg in self.workout.segments:
+    #         self.workout.distance = sum(seg.calc_distance())
+    #         print "length_workout:", self.workout.distance
+    #     # the sum of all the segments that make up the week
+
+    def show_segment(self):
+        if self.pace:
+            pace_as_time = self.pace.convert_timedelta()
+            return "Pace: ", pace_as_time[1]
+        if self.rep > 1:
+            return "Reps: {} x {} min.".format(self.rep, self.time)
+        if self.time:
+            return "Time: ", self.total_time
+        if self.distance:
+            return "Distance: ", self.distance
+
+    def __repr__(self):
+        """Return string representation of segment"""
+
+        string = "<Intensity: {}, reps: {}, time: {}, rest: {}>"
+        return string.format(self.emt, self.rep, self.time, self.rest)
 
 
 
