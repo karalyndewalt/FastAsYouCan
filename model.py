@@ -421,22 +421,22 @@ class Segment(object):
     def show_segment(self):
         """Returns string representation of the segment"""
 
-        seg_string = "Segment: "
+        seg_tuple = ()
         if self.pace:
             pace_as_time = self.pace.convert_timedelta()
             pace = "Pace: {} ".format(pace_as_time[1])
-            seg_string += pace
+            seg_tuple += (pace,)
         if self.rep > 1:
             reps = "Reps: {} x {} min. ".format(self.rep, self.time)
-            seg_string += reps
+            seg_tuple += (reps,)
         if self.time:
             time = "Time: {} ".format(self.total_time)
-            seg_string += time
+            seg_tuple += (time,)
         if self.distance:
             distance = "Distance: {} ".format(self.distance)
-            seg_string += distance
+            seg_tuple += (distance,)
 
-        return seg_string
+        return seg_tuple
 
     def __repr__(self):
         """Return string representation of segment"""

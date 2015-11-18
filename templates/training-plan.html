@@ -13,9 +13,20 @@
                 {% set workouts = week.workouts %}
                 {% for workout in workouts %}
                     {% set segments = workout.segments %}
+                <div>    
                     <span>{{ workout.show_workout() }}</span>
                     {% for segment in segments %}
-                        <time datetime="2015-07-26" class="blank"><span class="caldate">{{ segment.show_segment() }}</span></time>
+                        {% set segment = segment.show_segment() %}
+                        <time datetime="2015-07-26" class="blank"><span class="caldate">
+                            <ul>
+                                {% for attr in segment %}
+                                    <li>
+                                        {{attr}}
+                                    </li>
+                                {% endfor %}
+                            </ul>   
+                        </span></time>
+                </div>        
                     {% endfor %}
                 {% endfor %}
             {% endfor %}
