@@ -47,8 +47,6 @@ def create_table():
 
     user_obj = User.query.filter(User.email == email).first()
     user_id = user_obj.user_id
-    # FUN FACT! object cannot be stored in a session, "not JSON serializable"
-    # session["user"] = new_user
     session["user_id"] = user_id
 
     new_race = Race(user_id=session["user_id"], distance=distance_in_meters, time=time)

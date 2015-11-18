@@ -305,6 +305,7 @@ class Week(object):
 # peakmileage = User.weekly_mileage, do not need this in the __init__ because
 # the Week will be called as a method from the User class
     def __init__(self, user, percent_peak_mileage, plan, workouts, days=6):
+        self.user = user
         #  percent_peak_mileage is specified for each TP, must pass in.
         self.percent_peak_mileage = percent_peak_mileage
         # user_id from User class/instance, as class method
@@ -323,13 +324,13 @@ class Week(object):
         """Generate remaining training days"""
 
         days = self.days - len(workouts)
-        print "NUM days: ", days
-        print "week_in_meters: ", self.week_in_meters
-        print "quality_distance ", self.quality_distance
+        # print "NUM days: ", days
+        # print "week_in_meters: ", self.week_in_meters
+        # print "quality_distance ", self.quality_distance
         rem_dist = self.week_in_meters - self.quality_distance
         distance = rem_dist/days
         for i in range(days):
-            seg = Segment(emt="easy", user=user)
+            seg = Segment(emt="easy", user=self.user)
             seg.distance = distance
             workout = Workout(seg)
             workouts = workouts + (workout,)
@@ -355,13 +356,13 @@ class Workout(object):
         for segment in self.segments:
             segment.workout = self
         self.distance = sum(seg.calc_distance() for seg in segments)
-        print"workout distance: ", self.distance
+        # print"workout distance: ", self.distance
         self.week = None
 
     def show_workout(self):
-        for seg in self.segments:
-            seg.show_segment()
-        return "Workout Distance: ", self.distance
+        # for seg in self.segments:
+        #     seg.show_segment()
+        return "Workout Distance: {}".format(self.distance)
 
 
 class Segment(object):
@@ -376,26 +377,29 @@ class Segment(object):
 
         # emt is the STRING: "easy", "marathon", or "tempo"
         self.emt = emt
-        # when segment is called from the User class user_id will not need to be passed in?! ***for testing add user_id=None
+        # when segment is called from the User class user_id will not need to be passed in
         self.user = user
         # uses instance method from User class
         self.pace = user.paces(self.emt)
-        # add bi-directional accountability, linked to parent instance
         self.rep = rep
         self.time = time
         if time:
             self.total_time = time * rep
         self.rest = rest
+        # adds bi-directional accountability, linked to parent instance
         self.workout = None
-        peakmileage = self.user.weekly_mileage
+        # peakmileage in meters
+        peakmileage = calculator.miles_to_meters(self.user.weekly_mileage)
+        self.distance = None
         if distance_as_percent:
             self.distance = (distance_as_percent * peakmileage)
+        # in meters
         if distance_in_miles:
-            # TODO(kara): invoke a calculator function to convert
-            # miles to meters, use calculator.py, it has doctests
-            # do I need an abstraction of the distance class with conversion methods from
-            # calculator?
             self.distance = calculator.miles_to_meters(distance_in_miles)
+        # there is another way to define self.distance --> ? when generated from
+        # the Week the segment distance is seg.distance...
+        # sooo set self.distance = None so it can be set outside of the __init__?
+        # and probably more... sit.
 
     def calc_distance(self):
         """
@@ -404,7 +408,6 @@ class Segment(object):
         if self.time:
             velocity_range = self.pace.velocity()
             distance = velocity_range[1] * self.total_time
-
         else:
             distance = self.distance
         return distance
@@ -416,15 +419,24 @@ class Segment(object):
     #     # the sum of all the segments that make up the week
 
     def show_segment(self):
+        """Returns string representation of the segment"""
+
+        seg_string = "Segment: "
         if self.pace:
             pace_as_time = self.pace.convert_timedelta()
-            return "Pace: ", pace_as_time[1]
+            pace = "Pace: {} ".format(pace_as_time[1])
+            seg_string += pace
         if self.rep > 1:
-            return "Reps: {} x {} min.".format(self.rep, self.time)
+            reps = "Reps: {} x {} min. ".format(self.rep, self.time)
+            seg_string += reps
         if self.time:
-            return "Time: ", self.total_time
+            time = "Time: {} ".format(self.total_time)
+            seg_string += time
         if self.distance:
-            return "Distance: ", self.distance
+            distance = "Distance: {} ".format(self.distance)
+            seg_string += distance
+
+        return seg_string
 
     def __repr__(self):
         """Return string representation of segment"""
