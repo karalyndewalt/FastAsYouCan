@@ -4,7 +4,7 @@ from jinja2 import StrictUndefined
 
 from flask import Flask, render_template, redirect, request, flash, session
 from flask_debugtoolbar import DebugToolbarExtension
-from datetime import timedelta
+from datetime import timedelta, datetime
 import calculator
 from model import connect_to_db, db, User, Race, Pace
 
@@ -34,9 +34,14 @@ def create_table():
     peak_mileage = float(request.form.get("mileage"))
     units = request.form.get("units")
     distance = float(request.form.get("distance"))
+    race_date = request.form.get("race-date")
+    race_date = datetime.strptime(race_date, "%Y-%m-%d")
+    session["race_date"] = race_date
+    # store race_date to use with calendar
     email = request.form.get("email")
 
-    # have function in calculator.py (with doctest) would it be clear to call .calculator.function()?
+    # TODO(calc. doctest) have function in calculator.py (with doctest) would it
+    # be clear to call .calculator.function()?
     time = float(mm) + (float(hr) * 60) + (float(ss) / 60)
 
     distance_in_meters = calculator.convert_distance_to_meters(distance, units)

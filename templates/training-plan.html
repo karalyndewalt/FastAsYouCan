@@ -9,24 +9,27 @@
             forward OR (later) hard-coded into the html and content can be moved/back independent of date.-->
     <main>
         <section>
-            {% for week in training_plan %}
-                {% set workouts = week.workouts %}
-                {% for workout in workouts %}
-                    {% set segments = workout.segments %}
-                <div>    
-                    <span>{{ workout.show_workout() }}</span>
-                    {% for segment in segments %}
-                        {% set segment = segment.show_segment() %}
-                        <time datetime="2015-07-26" class="blank"><span class="caldate">
-                            <ul>
-                                {% for attr in segment %}
-                                    <li>
-                                        {{attr}}
-                                    </li>
-                                {% endfor %}
-                            </ul>   
-                        </span></time>
-                </div>        
+            <div>
+                {% for week in training_plan %}
+                <ul>
+                    <li>{{ week.show_week() }}</li>
+                    {% set workouts = week.workouts %}
+                    {% for workout in workouts %}
+                        {% set segments = workout.segments %}
+                        <ul>
+                            <li>{{ workout.show_workout() }}</li>
+                            {% for segment in segments %}
+                                {% set segment = segment.show_segment() %}
+                                <time datetime="2015-07-26" class="blank"><span class="caldate">
+                                <ul>
+                                        {% for attr in segment %}
+                                            <li>{{attr}}</li>
+                                        {% endfor %}
+                                </ul>
+                        </ul>
+                </ul>   
+                            </span></time>
+            </div>        
                     {% endfor %}
                 {% endfor %}
             {% endfor %}

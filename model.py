@@ -318,6 +318,7 @@ class Week(object):
         self.workouts = self.create_remaining_days(workouts)
         for workout in self.workouts:
             workout.week = self
+        self.distance = sum(workout.distance for workout in self.workouts)
         # print "WEEK DIST: ", self.distance
 
     def create_remaining_days(self, workouts):
@@ -334,7 +335,14 @@ class Week(object):
             seg.distance = distance
             workout = Workout(seg)
             workouts = workouts + (workout,)
+        remainder_of_seven = 7 - len(workouts)
+        for i in range(remainder_of_seven):
+            workouts = workouts + (0,)
         return workouts
+
+    def show_week(self):
+
+        return "Week Distance: {}".format(self.distance)
 
 
 class Workout(object):
