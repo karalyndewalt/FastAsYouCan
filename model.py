@@ -1,7 +1,8 @@
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 import calculator
-from datetime import timedelta
+from datetime import timedelta, date
+
 
 app = Flask(__name__)
 
@@ -153,6 +154,11 @@ class TrainingPlan(object):
 # weeks is a list of Weeks
     def __init__(self, user):
         self.weeks = []
+        self.days = self.make_list_of_days()
+
+        # to return the day use datetime class attr: .day
+        # to return the YYYY_MM_DD (ISO 8601) format use instance method: .isoformat()
+        # see python docs for datetime for addional methods
 
         # week 1 - 3
         self.weeks.append(Week(user, 0.60, plan=self, workouts=()))
@@ -293,6 +299,22 @@ class TrainingPlan(object):
             ),
         )))
 
+    def make_list_of_days(self):
+        """Makes list of the calendar datetime objects for the training_plan
+
+        to return the day use datetime class attr: .day
+        to return the YYYY_MM_DD (ISO 8601) format use instance method: .isoformat()
+        see python docs for datetime for addional methods
+        """
+
+        days = []
+        start_date = date.today()
+        # 18 weeks * 7 day/week = 126 days,
+        for i in range(126):
+            current_day = start_date + timedelta(days=i)
+            days.append(current_day)
+        return days
+
 
 class Week(object):
     """Returns x days of training as a list
@@ -337,7 +359,7 @@ class Week(object):
             workouts = workouts + (workout,)
         remainder_of_seven = 7 - len(workouts)
         for i in range(remainder_of_seven):
-            workouts = workouts + (0,)
+            workouts = workouts + (Workout(),)
         return workouts
 
     def show_week(self):
@@ -368,9 +390,9 @@ class Workout(object):
         self.week = None
 
     def show_workout(self):
-        # for seg in self.segments:
-        #     seg.show_segment()
-        return "Workout Distance: {}".format(self.distance)
+        if self.distance:
+            return "Workout Distance: {}".format(self.distance)
+        return "Rest day"
 
 
 class Segment(object):

@@ -62,17 +62,24 @@ def create_table():
 
     return render_template("generate-calendar.html", VDOT=session["VDOT"])
 
+
 @app.route("/generate-calendar")
 def create_calendar():
     # TODO(kara, login): change this to call off the user_id when you have login conf.
 
     user = db.session.query(User).filter(User.user_id == session["user_id"]).first()
     training_plan = user.training_plan()
+    weeks = training_plan.weeks
+    days_list = training_plan.days
+    zipped_training_plan = []
+    for week in weeks:
+        workouts = week.workouts
+        zipped_training_plan.append(zip(days_list, workouts))
+        days_list = days_list[8:]
 
-    return render_template("training-plan.html", training_plan=training_plan.weeks)
+    return render_template("training-plan.html", training_plan=weeks,
+                           zipped_training_plan=zipped_training_plan)
 
-    # JOEL
-    return render_template("training-plan.html", training_plan=training_plan.weeks)
 
 if __name__ == "__main__":
     #must set to true befor invoking DebugToolbarExtension

@@ -10,29 +10,28 @@
     <main>
         <section>
             <div>
-                {% for week in training_plan %}
-                <ul>
-                    <li>{{ week.show_week() }}</li>
-                    {% set workouts = week.workouts %}
-                    {% for workout in workouts %}
-                        {% set segments = workout.segments %}
+                {% for tup in zipped_training_plan %}
+                    {% for day, workout in tup %}
                         <ul>
-                            <li>{{ workout.show_workout() }}</li>
-                            {% for segment in segments %}
-                                {% set segment = segment.show_segment() %}
-                                <time datetime="2015-07-26" class="blank"><span class="caldate">
-                                <ul>
-                                        {% for attr in segment %}
-                                            <li>{{attr}}</li>
-                                        {% endfor %}
-                                </ul>
-                        </ul>
-                </ul>   
-                            </span></time>
-            </div>        
+                            <ul>
+                                <li>{{ workout.show_workout() }}</li>
+                                {% set segments = workout.segments %}
+                                {% for segment in segments %}
+                                    {% set segment = segment.show_segment() %}
+                                    <time datetime={{day.isoformat()}} class="blank">{{day.day}}<span class="caldate">
+                                    <ul>
+                                            {% for attr in segment %}
+                                                <li>{{attr}}</li>
+                                            {% endfor %}
+                                    </ul>
+                                    </span></time>
+                                {% endfor %}
+                            </ul>
+                        </ul>   
                     {% endfor %}
-                {% endfor %}
-            {% endfor %}
+                {% endfor%}
+                            
+            </div>        
         </section>
     </main>
 {% endblock %}
