@@ -14,11 +14,11 @@
                     {% for day, workout in tup %}
                         <ul>
                             <ul>
+                                <time datetime={{day.isoformat()}} class="blank">{{day.day}}<span class="caldate">
                                 <li>{{ workout.show_workout() }}</li>
-                                {% set segments = workout.segments %}
-                                {% for segment in segments %}
-                                    {% set segment = segment.show_segment() %}
-                                    <time datetime={{day.isoformat()}} class="blank">{{day.day}}<span class="caldate">
+                                    {% set segments = workout.segments %}
+                                    {% for segment in segments %}
+                                        {% set segment = segment.show_segment() %}
                                     <ul>
                                             {% for attr in segment %}
                                                 <li>{{attr}}</li>
@@ -35,8 +35,3 @@
         </section>
     </main>
 {% endblock %}
-
-<!-- use for loop to populate; it will make the whole program, 18 weeks 
-for week in []
-    for i in tuple 
-        <li> = i  -->

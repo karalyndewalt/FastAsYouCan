@@ -75,7 +75,7 @@ def create_calendar():
     for week in weeks:
         workouts = week.workouts
         zipped_training_plan.append(zip(days_list, workouts))
-        days_list = days_list[8:]
+        days_list = days_list[7:]
 
     return render_template("training-plan.html", training_plan=weeks,
                            zipped_training_plan=zipped_training_plan)
