@@ -22,6 +22,7 @@ class User(db.Model):
     user_id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     email = db.Column(db.String(50), unique=True)
     weekly_mileage = db.Column(db.Integer, nullable=True)
+    # TODO(kara): if time change units on weekly_mileage
 
     def greet(self):
         """Greet using email"""
@@ -322,10 +323,7 @@ class Week(object):
     Uses user race.VDOT to determine distance of workouts, and remainder of
     peak mileage to assign distances to non-quality days.
     """
-# TODO(kara): CLEAN - peakmileage should come from the User class. User.weekly_mileage
-# workouts - comes as a list, should only accept a list (even an empty one)
-# peakmileage = User.weekly_mileage, do not need this in the __init__ because
-# the Week will be called as a method from the User class
+# TODO(kara): if time chance units on User.weekly_mileage
     def __init__(self, user, percent_peak_mileage, plan, workouts, days=6):
         self.user = user
         #  percent_peak_mileage is specified for each TP, must pass in.
@@ -363,14 +361,17 @@ class Week(object):
         return workouts
 
     def show_week(self):
+        """String representation of week distance. For user display"""
 
-        return "Week Distance: {}".format(self.distance)
+        # convert meters to miles to display, see all _show functions if changed
+        miles = calculator.meters_to_miles(self.distance)
+        return "Week Distance: {0:.2f}".format(miles)
 
 
 class Workout(object):
-    """Returns list of segments
+    """Returns tuple of segments
 
-    a single workout is a list of segments
+    a single workout is a tuple of segments
     'quality days', specific instructions for workouts with distance, time, pace attributes
     """
     # workout is a list of segments(plural), segments = [segment, segment, segment....]
@@ -379,7 +380,7 @@ class Workout(object):
 
     def __init__(self, *segments):
         # TODO(kara):
-        # if not isinstance(segments, list):
+        # if not isinstance(segments, tuple):
         #     raise TypeError("whatever you want to say")
 
         self.segments = segments
@@ -390,17 +391,24 @@ class Workout(object):
         self.week = None
 
     def show_workout(self):
+        """String representation of workout distance. For user display"""
+
         if self.distance:
-            return "Workout Distance: {}".format(self.distance)
+            # convert meters to miles to display, see all _show functions if changed
+            miles = calculator.meters_to_miles(self.distance)
+            return "Workout Distance: {0:.2f}".format(miles)
         return "Rest day"
+        # A Workout() without *segments returns 0 for self.distance.
+        # because distance determined by segements.
+        # Segments will be generated up to the number of training days specified
+        # with in Week. Any of the remaining 7 week days will be generated as
+        # blank days and labled "Rest day" for display
 
 
 class Segment(object):
     """Pace() and distance or time components of a workout"""
 
-# TODO(kara):
-# think about default of time as 1
-# make abstraction or class methods?? LATER
+# TODO(kara): unit test distance calculations
 
     def __init__(self, emt, user, workout=None, rep=1, time=None, distance_in_miles=None,
                  distance_as_percent=None, rest=None):
@@ -432,8 +440,7 @@ class Segment(object):
         # and probably more... sit.
 
     def calc_distance(self):
-        """
-        """
+        """Calculates distance coverd in a segment. """
         # needs to determine distance uses pace.velocity OR self.distance * time
         if self.time:
             velocity_range = self.pace.velocity()
@@ -442,14 +449,8 @@ class Segment(object):
             distance = self.distance
         return distance
 
-    # def length_workout(self):
-    #     for seg in self.workout.segments:
-    #         self.workout.distance = sum(seg.calc_distance())
-    #         print "length_workout:", self.workout.distance
-    #     # the sum of all the segments that make up the week
-
     def show_segment(self):
-        """Returns string representation of the segment"""
+        """Returns tuple containing string representation of the segment, for user display"""
 
         seg_tuple = ()
         if self.pace:
@@ -459,11 +460,16 @@ class Segment(object):
         if self.rep > 1:
             reps = "Reps: {} x {} min. ".format(self.rep, self.time)
             seg_tuple += (reps,)
-        if self.time:
+        if self.rep == 1 and self.time:
             time = "Time: {} ".format(self.total_time)
             seg_tuple += (time,)
+        if self.rest:
+            rest = "Rest: {} min. ".format(self.rest)
+            seg_tuple += (rest,)
         if self.distance:
-            distance = "Distance: {} ".format(self.distance)
+            # convert meters to miles to display, see all _show functions if changed
+            miles = calculator.meters_to_miles(self.distance)
+            distance = "Distance: {0:.2f} miles ".format(miles)
             seg_tuple += (distance,)
 
         return seg_tuple
@@ -473,8 +479,6 @@ class Segment(object):
 
         string = "<Intensity: {}, reps: {}, time: {}, rest: {}>"
         return string.format(self.emt, self.rep, self.time, self.rest)
-
-
 
 ################################################################################
 # Helper Functions
