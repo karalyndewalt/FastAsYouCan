@@ -184,7 +184,8 @@ class TrainingPlan(object):
         # weeks 7 & 8
         self.weeks.append(Week(user, 0.80, plan=self, workouts=(
             Workout(
-                Segment(emt='easy', user=user, distance_as_percent=0.216),
+                (Segment(emt='easy', user=user, distance_as_percent=0.216),
+                 Segment(emt='easy', user=user, time=150)),
                 ),
             Workout(
                 Segment(emt='tempo', user=user, rep=2, time=10, rest=1),
@@ -379,15 +380,27 @@ class Workout(object):
     # use segment.distance() to get distance of workout.
 
     def __init__(self, *segments):
-        # TODO(kara):
-        # if not isinstance(segments, tuple):
-        #     raise TypeError("whatever you want to say")
 
-        self.segments = segments
-        for segment in self.segments:
+        # make new tuple to hold individual segment objects
+        final_segments = ()
+        # loop over segments to:
+            # find shortest in a tuple, construct tuple of just segment objects
+            # assign the 'parent' workout
+        for i in range(len(segments)):
+            segment = segments[i]
+            if isinstance(segment, tuple):
+                tup = segment
+                # find smaller segment in the tuple
+                segment = min(tup, key=lambda x: x.distance)
+                # add smaller segment to tuple
+                final_segments = final_segments + (segment,)
+            # add all other segment objects to the tuple
+            final_segments = final_segments = (segment,)
+            # assign parent workout
             segment.workout = self
-        self.distance = sum(seg.calc_distance() for seg in segments)
-        # print"workout distance: ", self.distance
+        self.segments = final_segments
+        self.distance = sum(seg.calc_distance() for seg in final_segments)
+        # print "workout distance: ", self.distance
         self.week = None
 
     def show_workout(self):
@@ -423,6 +436,10 @@ class Segment(object):
         self.time = time
         if time:
             self.total_time = time * rep
+        # TODO(kara): explaing self.distance from time: if the segment was asked
+        # self.dist when only time is given it should not return a value. you are
+        # running for time specifically. A workout can determine an aprox. of
+        # distance of any segment using calc_distance()
         self.rest = rest
         # adds bi-directional accountability, linked to parent instance
         self.workout = None
@@ -434,10 +451,6 @@ class Segment(object):
         # in meters
         if distance_in_miles:
             self.distance = calculator.miles_to_meters(distance_in_miles)
-        # there is another way to define self.distance --> ? when generated from
-        # the Week the segment distance is seg.distance...
-        # sooo set self.distance = None so it can be set outside of the __init__?
-        # and probably more... sit.
 
     def calc_distance(self):
         """Calculates distance coverd in a segment. """
