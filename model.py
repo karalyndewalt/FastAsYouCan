@@ -193,7 +193,8 @@ class TrainingPlan(object):
         )))
         self.weeks.append(Week(user, 0.80, plan=self, workouts=(
             Workout(
-                Segment(emt='easy', user=user, distance_as_percent=0.216),
+                (Segment(emt='easy', user=user, distance_as_percent=0.216),
+                 Segment(emt='easy', user=user, time=150)),
             ),
             Workout(
                 Segment(emt='tempo', user=user, rep=2, time=10, rest=1),
@@ -212,7 +213,8 @@ class TrainingPlan(object):
         # week 10 and 11
         self.weeks.append(Week(user, 0.90, plan=self, workouts=(
             Workout(
-                Segment(emt='easy', user=user, distance_as_percent=0.243)
+                (Segment(emt='easy', user=user, distance_as_percent=0.243),
+                 Segment(emt='easy', user=user, time=150)),
             ),
             Workout(
                 Segment(emt='tempo', user=user, rep=3, time=10, rest=1),
@@ -220,7 +222,8 @@ class TrainingPlan(object):
         )))
         self.weeks.append(Week(user, 0.90, plan=self, workouts=(
             Workout(
-                Segment(emt='easy', user=user, distance_as_percent=0.243),
+                (Segment(emt='easy', user=user, distance_as_percent=0.243),
+                 Segment(emt='easy', user=user, time=150)),
             ),
             Workout(
                 Segment(emt='tempo', user=user, rep=3, time=10, rest=1),
@@ -229,7 +232,8 @@ class TrainingPlan(object):
         # week 12
         self.weeks.append(Week(user, 0.70, plan=self, workouts=(
             Workout(
-                Segment(emt='marathon', user=user, distance_in_miles=12),
+                (Segment(emt='marathon', user=user, distance_in_miles=12),
+                 Segment(emt='marathon', user=user, time=120)),
             ),
             Workout(
                 Segment(emt='tempo', user=user, rep=2, time=15, rest=1),
@@ -250,7 +254,8 @@ class TrainingPlan(object):
         # week 14
         self.weeks.append(Week(user, 0.90, plan=self, workouts=(
             Workout(
-                Segment(emt='marathon', user=user, distance_in_miles=15),
+                (Segment(emt='marathon', user=user, distance_in_miles=15),
+                 Segment(emt='marathon', user=user, time=150)),
             ),
             Workout(
                 Segment(emt='tempo', user=user, rep=2, time=10, rest=2),
@@ -282,7 +287,8 @@ class TrainingPlan(object):
         # week 17
         self.weeks.append(Week(user, 0.80, plan=self, workouts=(
             Workout(
-                Segment(emt='marathon', user=user, distance_in_miles=12),
+                (Segment(emt='marathon', user=user, distance_in_miles=12),
+                 Segment(emt='marathon', user=user, time=120)),
             ),
             Workout(
                 Segment(emt='easy', user=user, distance_in_miles=2),
