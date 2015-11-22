@@ -28,10 +28,9 @@ class User(db.Model):
         """Greet using email"""
         return "Hello, {}".format(self.email)
 
-    # TODO(kara): change all 'intensity' to 'intensity'
-
     def paces(self, intensity):
         """Returns object of Pace class"""
+
         # finds users most recent race
         most_recent_race = Race.query.filter(Race.user_id == self.user_id).order_by(Race.race_id.desc()).first()
         # __init__ on Pace looks like: Pace(self, VDOT, intensity(as string))
@@ -67,7 +66,6 @@ class Race(db.Model):
 
     user = db.relationship("User", backref=db.backref("races", order_by=race_id))
 
-    # turn into a property, later
     def VDOT(self):
         """Return user VDOT"""
 
@@ -82,11 +80,16 @@ class Race(db.Model):
         """Provide helpful representation when printed"""
 
         string = "<Race id: {}, User id: {}, distance: {}, time: {}>"
+
         return string.format(self.race_id, self.user_id, self.distance, self.time)
 
 
 class Pace(object):
-#     """Store paces E, M, T as percentages"""
+    """Store paces Easy, Marathon, and Temo as range of percentages
+
+    methods allow the range for each intensity to be returned as objects of
+    pace class in velocity or minutes/mile
+    """
 
     PACE_DICT = {
         "easy": (0.55, 0.65, 0.74),
@@ -150,16 +153,15 @@ class Pace(object):
 
 
 class TrainingPlan(object):
-    """Returns dictionary of Weeks"""
+    """Returns tuple of Week objects
 
-# weeks is a list of Weeks
+    each Week object contains a tuple of Workout objects
+    each Workout object contains a tuple of Segment objects
+    """
+
     def __init__(self, user):
         self.weeks = []
         self.days = self.make_list_of_days()
-
-        # to return the day use datetime class attr: .day
-        # to return the YYYY_MM_DD (ISO 8601) format use instance method: .isoformat()
-        # see python docs for datetime for addional methods
 
         # week 1 - 3
         self.weeks.append(Week(user, 0.60, plan=self, workouts=()))
@@ -184,6 +186,7 @@ class TrainingPlan(object):
         # weeks 7 & 8
         self.weeks.append(Week(user, 0.80, plan=self, workouts=(
             Workout(
+                # this workout calls for the shorter of these two segments
                 (Segment(intensity='easy', user=user, distance_as_percent=0.216),
                  Segment(intensity='easy', user=user, time=150)),
                 ),
@@ -312,7 +315,7 @@ class TrainingPlan(object):
 
         to return the day use datetime class attr: .day
         to return the YYYY_MM_DD (ISO 8601) format use instance method: .isoformat()
-        see python docs for datetime for addional methods
+        see python docs for datetime for additional methods
         """
 
         days = []
@@ -390,7 +393,12 @@ class Workout(object):
     # use segment.distance() to get distance of workout.
 
     def __init__(self, *segments):
+        self.segments = self.final_segments(segments)
+        self.distance = sum(seg.calc_distance() for seg in self.segments)
+        # print "workout distance: ", self.distance
+        self.week = None
 
+    def final_segments(self, segments):
         # make new tuple to hold individual segment objects
         final_segments = ()
         # loop over segments to:
@@ -405,13 +413,10 @@ class Workout(object):
                 # add smaller segment to tuple
                 final_segments = final_segments + (segment,)
             # add all other segment objects to the tuple
-            final_segments = final_segments = (segment,)
+            final_segments = final_segments + (segment,)
             # adds bi-directional accountability, linked to parent instance
             segment.workout = self
-        self.segments = final_segments
-        self.distance = sum(seg.calc_distance() for seg in final_segments)
-        # print "workout distance: ", self.distance
-        self.week = None
+        return final_segments
 
     def show_workout(self):
         """String representation of workout distance. For user display"""
