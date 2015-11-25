@@ -1,37 +1,56 @@
 {% extends 'base.html' %}
 
 {% block content %} 
-<h1>Training Program</h1>
-    
-        
-            <!--TODO(kara,userinput) use datetime="", reversed from "race-day" 
-            class="caldate" will come from datetimeformating (python, passed 
-            forward OR (later) hard-coded into the html and content can be moved/back independent of date.-->
+<h1 id="TP">Training Program</h1>
     <main>
-        <section>
-            <div>
-                {% for tup in zipped_training_plan %}
-                    {% for day, workout in tup %}
-                        <ul>
-                            <ul>
-                                <time datetime={{day.isoformat()}} class="blank">{{day.day}}<span class="caldate">
-                                <li>{{ workout.show_workout() }}</li>
-                                    {% set segments = workout.segments %}
-                                    {% for segment in segments %}
-                                        {% set segment = segment.show_segment() %}
-                                    <ul>
-                                            {% for attr in segment %}
-                                                <li>{{attr}}</li>
-                                            {% endfor %}
-                                    </ul>
-                                    </span></time>
+        <section class="col-md-10 col-md-offset-1">
+            <table class="table">
+                {% for week in zipped_training_plan %}
+                <tr class="sortable">
+                    {% for day, workout in week %}
+                    <td class="droppable">
+                        <time class="no-sort" datetime={{day.isoformat()}}>{{day.day}}</time>
+                        <div class="draggableWorkout">{{ workout.show_workout() }}
+                            {% set segments = workout.segments %}
+                            {% for segment in segments %}
+                                {% set segment = segment.show_segment() %}
+                            <div>
+                                {% for attr in segment %}
+                                    <div>{{attr}}</div>
                                 {% endfor %}
-                            </ul>
-                        </ul>   
+                            </div>
+                            {% endfor %}
+                        </div>    
+                    </td> 
                     {% endfor %}
+                </tr>
                 {% endfor%}
-                            
-            </div>        
+            </table>        
         </section>
     </main>
+
+<script>
+  $(function() {
+    $( ".sortable" ).sortable();
+    $( ".sortable" ).disableSelection();
+  });
+  </script>
+  <script>
+  // $(function() {
+  //   $( ".draggableWorkout" ).draggable({
+  //     revert: "invalid",
+  //     axis: "x" });
+  //   });
+  //   $( ".droppable" ).droppable({
+  //     drop: function( event, ui ) {
+  //       $( this )
+  //         .find( "td" )
+  //         .html( "Dropped!" );
+  //     }
+  //   });
+  //   $( ".sortable" ).sortable({
+  //     revert: true
+  //   });
+  
+  </script>
 {% endblock %}

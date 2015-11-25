@@ -34,9 +34,9 @@ def create_table():
     peak_mileage = float(request.form.get("mileage"))
     units = request.form.get("units")
     distance = float(request.form.get("distance"))
-    race_date = request.form.get("race-date")
-    race_date = datetime.strptime(race_date, "%Y-%m-%d")
-    session["race_date"] = race_date
+    # race_date = request.form.get("race-date")
+    # race_date = datetime.strptime(race_date, "%Y-%m-%d")
+    # session["race_date"] = race_date
     # store race_date to use with calendar
     email = request.form.get("email")
 

@@ -1,50 +1,55 @@
 {% extends 'base.html' %}
 {% block content %}
 
-    <h1>Run Calculator</h1>
+    <div class="container-fluid" id="left-col">
+        <div class="row" id="about">
+            <div class="col-xs-6">
+                <section>
+                    <h1>As Fast As You Can</h1>
+                    <p>
+                        An individualized 18-week marathon training program
+                    </p>
+                </section>
+            </div>
+            <div class="col-xs-6" id="right-col">
+                <form action="/calculate-VDOT" method="POST" id="form">
+                    <div class="form-group">
+                        Race distance: <br>
+                        <input id="rdist" class="form-control" type="number" name="distance" min="0">
+                        <br>
+                    </div>
+                    <div id="units"> 
+                        <input type="radio" name="units" value="miles"> miles
+                        <input type="radio" name="units" value="kilometers"> kilometers
+                        <input type="radio" name="units" value="meters"> meters
+                        <br><br>
+                    </div>
+                    <div id="finish-time" class="form-group">
+                        Finishing time: <br>
+                        <input type="number" name="hours" id="hr" size="3" min="0" max="59" value="00" lable="hour"> :
+                        <input type="number" name="minutes" id="mm" size="3" min="0" max="59" value="00" label="minutes"> :
+                        <input type="number" name="seconds" id="ss" size="3" min="0" max="59" value="00" lable="seconds"> 
+                        <br> 
+                    </div>     
 
-<!-- I think I want to store all this information in a session. User could 
-have access to mulitple VO2 values from different races without re submitting the 
-form. would return on same page "with your 'race/time' we determind your vo2 to 
-be %session would you like to generate a training calendar?" and a button 
-"use ___vo2 to generate calander" 
-couled resubmit form and and make more buttons.
-
--->
-
-        <div>
-            <form action="/calculate-VDOT" method="POST">
-                Race distance: <br>
-                <input type="number" id="rdist" name="distance">
-                <br>
-                
-                Units: 
-                <input type="radio" name="units" value="miles"> miles
-                <input type="radio" name="units" value="kilometers"> kilometers
-                <input type="radio" name="units" value="meters"> meters
-                <br><br>
-
-                Finishing time: <br>
-                <input type="number" name="hours" id="hr" size="3" min="0" max="59" value="00" lable="hour"> :
-                <input type="number" name="minutes" id="mm" size="3" min="0" max="59" value="00" label="minutes"> :
-                <input type="number" name="seconds" id="ss" size="3" min="0" max="59" value="00" lable="seconds"> 
-                <br> <br>       
-
-                Max Weekly Mileage: <br>
-                <input type="number" name="mileage" placeholder"miles" size="3" default="0">
-                <br> <br>
-
-                Race Date: <br>
-                <input type="date" name="race-date" id="race-date">
-                <br><br>
-
-                E-mail: <br>
-                <input type="email" name="email">
-
-                <br><br>
-                <input type="submit" value="Submit">
-            </form>
-        </div>
+                    <div class="form-group">
+                        Max Weekly Mileage: <br>
+                        <input id="mileage" class="form-control" type="number" name="mileage" placeholder"miles" size="3" default="0" min="0">
+                        <br> 
+                    </div>
+                    <!-- Race Date: <br>
+                    <input type="date" name="race-date" id="race-date">
+                    <br><br> -->
+                    <div class="form-group">
+                        E-mail: <br>
+                        <input id="email" class="form-control" type="email" name="email">
+                        <br><br>
+                    </div>
+                    <button type="submit" class="btn btn-default">Submit</button>
+                </form>
+            </div>
+        </div>    
+    </div>
 
 
 {% endblock %}

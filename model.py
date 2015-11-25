@@ -196,6 +196,7 @@ class TrainingPlan(object):
         )))
         self.weeks.append(Week(user, 0.80, plan=self, workouts=(
             Workout(
+                # this workout calls for the shorter of these two segments
                 (Segment(intensity='easy', user=user, distance_as_percent=0.216),
                  Segment(intensity='easy', user=user, time=150)),
             ),
@@ -216,6 +217,7 @@ class TrainingPlan(object):
         # week 10 and 11
         self.weeks.append(Week(user, 0.90, plan=self, workouts=(
             Workout(
+                # this workout calls for the shorter of these two segments
                 (Segment(intensity='easy', user=user, distance_as_percent=0.243),
                  Segment(intensity='easy', user=user, time=150)),
             ),
@@ -225,6 +227,7 @@ class TrainingPlan(object):
         )))
         self.weeks.append(Week(user, 0.90, plan=self, workouts=(
             Workout(
+                # this workout calls for the shorter of these two segments
                 (Segment(intensity='easy', user=user, distance_as_percent=0.243),
                  Segment(intensity='easy', user=user, time=150)),
             ),
@@ -235,6 +238,7 @@ class TrainingPlan(object):
         # week 12
         self.weeks.append(Week(user, 0.70, plan=self, workouts=(
             Workout(
+                # this workout calls for the shorter of these two segments
                 (Segment(intensity='marathon', user=user, distance_in_miles=12),
                  Segment(intensity='marathon', user=user, time=120)),
             ),
@@ -257,6 +261,7 @@ class TrainingPlan(object):
         # week 14
         self.weeks.append(Week(user, 0.90, plan=self, workouts=(
             Workout(
+                # this workout calls for the shorter of these two segments
                 (Segment(intensity='marathon', user=user, distance_in_miles=15),
                  Segment(intensity='marathon', user=user, time=150)),
             ),
@@ -290,6 +295,7 @@ class TrainingPlan(object):
         # week 17
         self.weeks.append(Week(user, 0.80, plan=self, workouts=(
             Workout(
+                # this workout calls for the shorter of these two segments
                 (Segment(intensity='marathon', user=user, distance_in_miles=12),
                  Segment(intensity='marathon', user=user, time=120)),
             ),
@@ -409,13 +415,15 @@ class Workout(object):
             if isinstance(segment, tuple):
                 tup = segment
                 # find smaller segment in the tuple
-                segment = min(tup, key=lambda x: x.distance)
+                seg = min(tup, key=lambda x: x.distance)
                 # add smaller segment to tuple
-                final_segments = final_segments + (segment,)
+                final_segments = final_segments + (seg,)
+                seg.workout = self
             # add all other segment objects to the tuple
-            final_segments = final_segments + (segment,)
+            else:
+                final_segments = final_segments + (segment,)
             # adds bi-directional accountability, linked to parent instance
-            segment.workout = self
+                segment.workout = self
         return final_segments
 
     def show_workout(self):
