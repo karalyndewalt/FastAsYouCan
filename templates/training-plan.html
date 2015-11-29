@@ -9,7 +9,7 @@
                 <tr class="sortable">
                     {% for day, workout in week %}
                     <td class="droppable">
-                        <time class="no-sort" datetime={{day.isoformat()}}>{{day.day}}</time>
+                      <time class="no-sort" datetime={{day.isoformat()}}>{{day.day}}</time>
                         <div class="draggableWorkout">{{ workout.show_workout() }}
                             {% set segments = workout.segments %}
                             {% for segment in segments %}

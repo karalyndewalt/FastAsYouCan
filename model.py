@@ -29,7 +29,7 @@ class User(db.Model):
         return "Hello, {}".format(self.email)
 
     def paces(self, intensity):
-        """Returns object of Pace class"""
+        """Return object of Pace class"""
 
         # finds users most recent race
         most_recent_race = Race.query.filter(Race.user_id == self.user_id).order_by(Race.race_id.desc()).first()
@@ -39,10 +39,12 @@ class User(db.Model):
         return pace_obj
 
     def most_recent_race(self):
+        """Return most recent Race object for a user"""
         race = Race.query.filter(Race.user_id == self.user_id).order_by(Race.race_id.desc()).first()
         return race
 
     def training_plan(self):
+        """Return TrainingPlan based on user's most recent race"""
         return TrainingPlan(self)
 
     def __repr__(self):
@@ -53,7 +55,7 @@ class User(db.Model):
 
 
 class Race(db.Model):
-    """Store users races to compute VDOT from"""
+    """Store user's races"""
 
     __tablename__ = "races"
 
@@ -102,7 +104,7 @@ class Pace(object):
         self.intensity = intensity
 
     def pace_range(self):
-        """Returns the range of times in minutes/mile for a given intensity"""
+        """Return the range of times in minutes/mile for a given intensity"""
 
         intensity_tuple = self.PACE_DICT[self.intensity]
         p_range = []
@@ -116,7 +118,7 @@ class Pace(object):
         return p_range
 
     def velocity(self):
-        """Returns list of velocity (low, avg, high) in meters/minute for a given intensity"""
+        """Return list of velocity (low, avg, high) in meters/minute for a given intensity"""
 
         intensity_tuple = self.PACE_DICT[self.intensity]
         velocity_range = []
@@ -153,7 +155,7 @@ class Pace(object):
 
 
 class TrainingPlan(object):
-    """Returns tuple of Week objects
+    """Return list of 18 Week objects for a user
 
     each Week object contains a tuple of Workout objects
     each Workout object contains a tuple of Segment objects
@@ -321,7 +323,7 @@ class TrainingPlan(object):
 
         to return the day use datetime class attr: .day
         to return the YYYY_MM_DD (ISO 8601) format use instance method: .isoformat()
-        see python docs for datetime for additional methods
+        see python docs for additional datetime methods
         """
 
         days = []
@@ -362,19 +364,24 @@ class Week(object):
         # print "WEEK DIST: ", self.distance
 
     def create_remaining_days(self, workouts):
-        """Generate remaining training days"""
+        """Return dynamicaly-generated remaining training days"""
 
+        # find remaining number of user specified days
         days = self.days - len(workouts)
         # print "NUM days: ", days
         # print "week_in_meters: ", self.week_in_meters
         # print "quality_distance ", self.quality_distance
+        # find remaining distance
         rem_dist = self.week_in_meters - self.quality_distance
+        # divide rem_dist between remaining days
         distance = rem_dist/days
+        # for each remaining day create an instance of Workout, intensity=easy
         for i in range(days):
             seg = Segment(intensity="easy", user=self.user)
             seg.distance = distance
             workout = Workout(seg)
             workouts = workouts + (workout,)
+        # adjust if user specified days is less than 7
         remainder_of_seven = 7 - len(workouts)
         for i in range(remainder_of_seven):
             workouts = workouts + (Workout(),)
@@ -394,8 +401,8 @@ class Workout(object):
     a single workout is a tuple of segments
     'quality days', specific instructions for workouts with distance, time, pace attributes
     """
-    # workout is a list of segments(plural), segments = [segment, segment, segment....]
-    # segments should only accept a list
+    # workout is a list of segments, segments = (segment, segment, segment....)
+    # segments should only accept a tuple
     # use segment.distance() to get distance of workout.
 
     def __init__(self, *segments):
@@ -405,6 +412,8 @@ class Workout(object):
         self.week = None
 
     def final_segments(self, segments):
+        """Return the less of two segments when tuple passed for segment"""
+
         # make new tuple to hold individual segment objects
         final_segments = ()
         # loop over segments to:
@@ -459,7 +468,7 @@ class Segment(object):
         self.time = time
         if time:
             self.total_time = time * rep
-        # TODO(kara): explaing self.distance from time: if the segment was asked
+        # explanation of self.distance from time: if the segment was asked
         # self.dist when only time is given it should not return a value. you are
         # running for time specifically. A workout can determine an aprox. of
         # distance of any segment using calc_distance()
@@ -476,7 +485,7 @@ class Segment(object):
             self.distance = calculator.miles_to_meters(distance_in_miles)
 
     def calc_distance(self):
-        """Calculates distance coverd in a segment. """
+        """Return distance covered in a segment. """
         # needs to determine distance uses pace.velocity OR self.distance * time
         if self.time:
             velocity_range = self.pace.velocity()
@@ -486,7 +495,7 @@ class Segment(object):
         return distance
 
     def show_segment(self):
-        """Returns tuple containing string representation of the segment, for user display"""
+        """Return tuple containing string representation of the segment, for user display"""
 
         seg_tuple = ()
         if self.pace:

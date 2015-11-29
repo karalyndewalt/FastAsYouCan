@@ -23,7 +23,6 @@ def index():
 
     return render_template("home.html")
 
-
  # return render_template("home.html", blah=blah)
 
 @app.route("/calculate-VDOT", methods=["POST"])
@@ -59,8 +58,17 @@ def create_table():
     db.session.commit()
 
     session["VDOT"] = new_race.VDOT()
+    easy_pace = user_obj.paces("easy")
+    marathon_pace = user_obj.paces("marathon")
+    tempo_pace = user_obj.paces("tempo")
 
-    return render_template("generate-calendar.html", VDOT=session["VDOT"])
+    easy_list = easy_pace.convert_timedelta()
+    marathon_list = marathon_pace.convert_timedelta()
+    tempo_list = tempo_pace.convert_timedelta()
+
+    return render_template("generate-calendar.html", VDOT=session["VDOT"],
+                           easy_low=easy_list[0], marathon_low=marathon_list[0], tempo_low=tempo_list[0],
+                           easy_high=easy_list[2], marathon_high=marathon_list[2], tempo_high=tempo_list[2])
 
 
 @app.route("/generate-calendar")

@@ -1,14 +1,32 @@
 {% extends 'base.html' %}
 {% block content %} 
 
-<p>submitted</p>
-<br>
-<li>VDOT {{ VDOT }} </li> 
+<main>
+    <div class="container-fluid" id="left-col">
+        <div class="row" id="about">
+            <div class="col-xs-6">
+                <section class="col-xs-9" id="explanation">
+                    <h3>Here's what we know from your race result</h3>   
+                            <p class="explanation">
+                                On flat, even surfaces your <strong>easy pace</strong> will range from <strong>{{ easy_low }} - {{ easy_high }}</strong>
+                                it's this pace that will allow you to build mileage, it should feel relaxed and fun. 
+                                <strong>Marathon pace</strong> will allow you to experience your race pace 
+                                and will range from <strong>{{ marathon_low }} - {{ marathon_high }}</strong>.
+                                To improve endurance you will run at <strong>Tempo pace</strong>: <strong>{{ tempo_low }} - {{ tempo_high }}</strong>.
+                                Be sure to keep the longer tempo runs on the slower end of this range,
+                                and letter-rip on the shorter reps!
+                            </p>
+                </section>
+                <br> <br>
+                <form action="/generate-calendar">
+                    <button id="MakeCalendar" type="submit" class="btn btn-default">Make Calendar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+<main>        
 
-<br> <br>
 
-<form action="/generate-calendar">
-    <input type="submit" value="Show Training Plan">
-</form>
+
 
 {% endblock %}
