@@ -1,0 +1,130 @@
+
+h1 {
+    text-align: center;
+/*    padding-left: 10%;*/
+    font-family: 'Raleway', sans-serif;
+    font-size: 40px;
+    font-weight: 100;
+    color: #fff1ce;
+}
+
+time {
+    color: #ff9311;
+    font-weight: bold;
+}
+
+div.byline {
+    text-align: center;
+    color: #17607d;
+
+} 
+
+section.about {
+    padding-top: 20px;
+    font-size:18px;
+    font-weight: 300;
+    color: #fff1ce;
+}
+
+body {
+    background-image: url('run.jpg');
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: 110%;
+    color: #FFF1CE;
+    font-weight: 200;
+    font-family: 'Raleway', sans-serif;
+}
+
+#right-col {
+    padding: 5% 0;
+    background-color: rgba(0, 16, 29, .20);
+    height: 100%;
+}
+
+#MakeCalendar {
+    margin-right: 10%;
+}
+
+form {
+    text-align: right;
+    padding-right: 15%;
+}
+
+input[type="number"], input[type="email"], input[type="radio"] {
+    background: transparent;
+    border: 0;
+    border-bottom: 1.5px solid silver;
+    outline: none;
+    font-size: 18px;
+    text-align: center;
+    font-family: 'Lato', sans-serif;
+    font-weight: 400;
+    color: white;
+}
+
+#rdist {
+    width: 75px;
+    float: right;
+
+}
+
+#units {
+    padding-bottom: 5px;
+} 
+
+#finish-time {
+    padding-bottom: 5px;
+}
+
+#mileage {
+    width: 75px;
+    float: right;
+}
+
+#email {
+    width: 75%;
+    float: right;
+}
+
+#about {
+    padding-left: 5%;
+}
+
+#TP {
+    font-weight: 200;
+    color: #17607d;
+}
+
+.draggableWorkout{
+    color: white;
+}
+
+td {
+    width: 14.2857143%;
+    background-color: rgba(0, 16, 29, .45);
+}
+
+td.droppable {
+    cursor: move;
+}
+
+table {
+    border-spacing: 10px;
+    border-collapse: separate;
+    font-size: 14px;
+}
+
+#explanation {
+    margin-top: 150px;
+    
+}
+
+p.explanation {
+    font-size: 18px;
+    font-weight: 200;
+}
+
+
+
