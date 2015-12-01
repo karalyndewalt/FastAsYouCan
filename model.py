@@ -344,6 +344,8 @@ class Week(object):
 
     Uses user race.VDOT to determine distance of workouts, and remainder of
     peak mileage to assign distances to non-quality days.
+
+    The lesser of two workouts my be selected for by passing workouts in as a tuple
     """
 # TODO(kara): if time change units on User.weekly_mileage
     def __init__(self, user, percent_peak_mileage, plan, workouts, days=6):
@@ -396,10 +398,11 @@ class Week(object):
 
 
 class Workout(object):
-    """Returns tuple of segments
+    """Return tuple of segments
 
-    a single workout is a tuple of segments
+    A single workout is a tuple of segments
     'quality days', specific instructions for workouts with distance, time, pace attributes
+
     """
     # workout is a list of segments, segments = (segment, segment, segment....)
     # segments should only accept a tuple

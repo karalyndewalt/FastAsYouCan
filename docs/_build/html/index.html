@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>About FastAsICan &mdash; AsFastAsYouCan 1.0 documentation</title>
+    <title>Fast As You Can &mdash; Fast As You Can 1.0 documentation</title>
     
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -23,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="AsFastAsYouCan 1.0 documentation" href="#" />
+    <link rel="top" title="Fast As You Can 1.0 documentation" href="#" />
     <link rel="next" title="Python Modules" href="modules.html" />
    
   
@@ -37,10 +37,65 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="about-fastasican">
-<h1>About FastAsICan<a class="headerlink" href="#about-fastasican" title="Permalink to this headline">¶</a></h1>
-<p>Yay!</p>
-<p>Hello.</p>
+  <div class="section" id="fast-as-you-can">
+<h1>Fast As You Can<a class="headerlink" href="#fast-as-you-can" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>As Fast As You Can is an individualized 18-week marathon training plan based on Jack Daniels&#8217; Running Formula and an earlier paper, <a class="reference external" href="http://s3.amazonaws.com/zanran_storage/www.canibaisereis.com/ContentPages/2466959967.pdf.">Oxygen Power</a> by Jack Daniels and Jimmy Glibert. This project was chosen as an exercise in object oriented design and data modeling.</p>
+<img alt="static/FAYC-calendar.png" src="static/FAYC-calendar.png" />
+<p>JD uses the relationships between running velocity/VO2 demand, and running duration and the fraction of VO2max in his training design.</p>
+<p>Here are examples of JD&#8217;s tables:</p>
+<img alt="http://www.coacheseducation.com/images/vdot1.jpg" src="http://www.coacheseducation.com/images/vdot1.jpg" />
+<p>This first table assigns runners who have preformed similarly, (aerobically) in various races to a training group, or VDOT value.</p>
+<img alt="http://www.coacheseducation.com/images/vdot3.jpg" src="http://www.coacheseducation.com/images/vdot3.jpg" />
+<p>In this second table different intensities of training (easy, marathon, threshold/tempo...) are given for specific VDOT values.</p>
+<p>I chose this project as an exercise in OOD and data modeling.
+Once you can describe a user based on their aerobic capacity you know several things about them -</p>
+<ul class="simple">
+<li>how fast they will be traveling at any given intensity</li>
+<li>if running for time, how far they will travel</li>
+<li>if running for distance, how long it will take them</li>
+</ul>
+<p>Because you can now approximate speed for all users based on simple rules it becomes easier to generate simple instructions.</p>
+<p>From here I wanted to abstract the idea of a training plan and encapsulate the components of a training plan from the most basic level up to the level of having a full training cycle. In this specific case taking a person with low to moderate running experience and giving them the training to complete a marathon.</p>
+<p>Digging down to the most basic level, a set of instructions for running will be defined by an intensity and a duration. I called this a segment.</p>
+<dl class="docutils">
+<dt><strong>segment</strong></dt>
+<dd>most basic component of a training plan, describes a pace for a duration which can be either distance or time based.</dd>
+</dl>
+<p>As for the component pieces of a segment, JD gives us a nice platform to define intensity.</p>
+<dl class="docutils">
+<dt><strong>intensity</strong></dt>
+<dd><dl class="first last docutils">
+<dt>a percentage of VDOT that can be translated to a velocity:</dt>
+<dd><ul class="first last simple">
+<li>Easy - 55-74% VDOT</li>
+<li>Marathon - 75-84% VDOT</li>
+<li>Tempo - 83-89% VDOT</li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>Duration however, may take many forms - time, miles, percentage of the week.
+If durations are not absolute (in miles or kilometers) the distance still must be calculated, the segment class contains methods to determine distance using the intensity and the duration.</p>
+<p>Once you have the idea of a segment you may combine them to make specific workouts.</p>
+<dl class="docutils">
+<dt><strong>workout</strong></dt>
+<dd>a unit of training composed of segments, can be seen as a day</dd>
+</dl>
+<p>And workouts can be combined to make a week</p>
+<dl class="docutils">
+<dt><strong>week</strong></dt>
+<dd>composed of workouts, total distance is a percentage of the user defined max</dd>
+</dl>
+<p>The program is designed to take a variable number of days, any days remaining from a weekly total of seven will return as &#8216;rest days&#8217;.</p>
+<p>Workouts can be explicitly described, by segments. Any remaining days from the variable days will be generated by the week.</p>
+<p>The lesser of two workouts given a user can be selected for by passing the two workouts as a tuple into the week.</p>
+<p>Here is a diagram of the model</p>
+<img alt="static/FYACmodel.png" src="static/FYACmodel.png" />
+<p>Here is a diagram for the generation of a week.</p>
+<img alt="static/TPflow.png" src="static/TPflow.png" />
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">Python Modules</a><ul>
@@ -51,14 +106,15 @@
 </li>
 </ul>
 </div>
-</div>
 <div class="section" id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<h3>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h3>
 <ul class="simple">
 <li><a class="reference internal" href="genindex.html"><span>Index</span></a></li>
 <li><a class="reference internal" href="py-modindex.html"><span>Module Index</span></a></li>
 <li><a class="reference internal" href="search.html"><span>Search Page</span></a></li>
 </ul>
+</div>
+</div>
 </div>
 
 
@@ -69,8 +125,13 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="#">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">About FastAsICan</a></li>
+<li><a class="reference internal" href="#">Fast As You Can</a><ul>
+<li><a class="reference internal" href="#overview">Overview</a><ul>
 <li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 <div class="relations">
 <h3>Related Topics</h3>
@@ -105,7 +166,7 @@
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2015, Kara DeWalt.
+      &copy;2015, KaraLyn DeWalt.
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>

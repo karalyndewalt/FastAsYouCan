@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>calculator module &mdash; AsFastAsYouCan 1.0 documentation</title>
+    <title>calculator module &mdash; Fast As You Can 1.0 documentation</title>
     
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -23,7 +23,10 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="AsFastAsYouCan 1.0 documentation" href="index.html" />
+    <link rel="top" title="Fast As You Can 1.0 documentation" href="index.html" />
+    <link rel="up" title="Python Modules" href="modules.html" />
+    <link rel="next" title="model module" href="model.html" />
+    <link rel="prev" title="Python Modules" href="modules.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
@@ -41,7 +44,7 @@
 <dl class="function">
 <dt id="calculator.convert_distance_to_meters">
 <code class="descclassname">calculator.</code><code class="descname">convert_distance_to_meters</code><span class="sig-paren">(</span><em>distance</em>, <em>units</em><span class="sig-paren">)</span><a class="headerlink" href="#calculator.convert_distance_to_meters" title="Permalink to this definition">¶</a></dt>
-<dd><p>&#8220;From user input returns distance in meters</p>
+<dd><p>Return distance in meters</p>
 <p>units passed through using radio buttons.</p>
 <p>convert kilometers to meters
 &gt;&gt;&gt; convert_distance_to_meters(5, &#8220;kilometers&#8221;)
@@ -57,7 +60,7 @@
 <dl class="function">
 <dt id="calculator.get_VO2_from_velocity">
 <code class="descclassname">calculator.</code><code class="descname">get_VO2_from_velocity</code><span class="sig-paren">(</span><em>velocity</em><span class="sig-paren">)</span><a class="headerlink" href="#calculator.get_VO2_from_velocity" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns VO2 give velocity</p>
+<dd><p>Return VO2 give velocity</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">get_VO2_from_velocity</span><span class="p">(</span><span class="mi">303</span><span class="p">)</span>
 <span class="go">60.172309999999996</span>
 </pre></div>
@@ -77,7 +80,7 @@
 <dl class="function">
 <dt id="calculator.get_velocity_from_VO2">
 <code class="descclassname">calculator.</code><code class="descname">get_velocity_from_VO2</code><span class="sig-paren">(</span><em>VO2</em><span class="sig-paren">)</span><a class="headerlink" href="#calculator.get_velocity_from_VO2" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns velocity given VO2</p>
+<dd><p>Return velocity given VO2</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">get_velocity_from_VO2</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span>
 <span class="go">302.41418000000004</span>
 </pre></div>
@@ -87,7 +90,7 @@
 <dl class="function">
 <dt id="calculator.hours_to_minutes">
 <code class="descclassname">calculator.</code><code class="descname">hours_to_minutes</code><span class="sig-paren">(</span><em>hours</em><span class="sig-paren">)</span><a class="headerlink" href="#calculator.hours_to_minutes" title="Permalink to this definition">¶</a></dt>
-<dd><p>returns hours given minutes</p>
+<dd><p>Return hours given minutes</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">hours_to_minutes</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 <span class="go">120</span>
 </pre></div>
@@ -97,7 +100,7 @@
 <dl class="function">
 <dt id="calculator.meters_to_miles">
 <code class="descclassname">calculator.</code><code class="descname">meters_to_miles</code><span class="sig-paren">(</span><em>meters</em><span class="sig-paren">)</span><a class="headerlink" href="#calculator.meters_to_miles" title="Permalink to this definition">¶</a></dt>
-<dd><p>Converts meters to miles</p>
+<dd><p>Convert meters to miles</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">meters_to_miles</span><span class="p">(</span><span class="mi">5000</span><span class="p">)</span>
 <span class="go">3.106863683249034</span>
 </pre></div>
@@ -107,7 +110,7 @@
 <dl class="function">
 <dt id="calculator.miles_to_meters">
 <code class="descclassname">calculator.</code><code class="descname">miles_to_meters</code><span class="sig-paren">(</span><em>miles</em><span class="sig-paren">)</span><a class="headerlink" href="#calculator.miles_to_meters" title="Permalink to this definition">¶</a></dt>
-<dd><p>Converts miles to meters</p>
+<dd><p>Convert miles to meters</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">miles_to_meters</span><span class="p">(</span><span class="mf">3.1</span><span class="p">)</span>
 <span class="go">4988.954</span>
 </pre></div>
@@ -117,7 +120,7 @@
 <dl class="function">
 <dt id="calculator.seconds_to_minutes">
 <code class="descclassname">calculator.</code><code class="descname">seconds_to_minutes</code><span class="sig-paren">(</span><em>seconds</em><span class="sig-paren">)</span><a class="headerlink" href="#calculator.seconds_to_minutes" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns minutes given seconds</p>
+<dd><p>Return minutes given seconds</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">seconds_to_minutes</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span>
 <span class="go">1.0</span>
 </pre></div>
@@ -153,7 +156,7 @@
 <dl class="function">
 <dt id="calculator.velocity">
 <code class="descclassname">calculator.</code><code class="descname">velocity</code><span class="sig-paren">(</span><em>distance</em>, <em>time</em><span class="sig-paren">)</span><a class="headerlink" href="#calculator.velocity" title="Permalink to this definition">¶</a></dt>
-<dd><p>Returns velocity</p>
+<dd><p>Return velocity</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">velocity</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
 <span class="go">200</span>
 </pre></div>
@@ -173,7 +176,8 @@
 <dl class="function">
 <dt id="calculator.velocity_to_min_per_mile">
 <code class="descclassname">calculator.</code><code class="descname">velocity_to_min_per_mile</code><span class="sig-paren">(</span><em>velocity</em><span class="sig-paren">)</span><a class="headerlink" href="#calculator.velocity_to_min_per_mile" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Return minutes per mile</p>
+</dd></dl>
 
 </div>
 
@@ -186,6 +190,10 @@
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">Python Modules</a><ul>
+      <li>Previous: <a href="modules.html" title="previous chapter">Python Modules</a></li>
+      <li>Next: <a href="model.html" title="next chapter">model module</a></li>
+  </ul></li>
   </ul></li>
 </ul>
 </div>
@@ -214,7 +222,7 @@
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2015, Kara DeWalt.
+      &copy;2015, KaraLyn DeWalt.
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>

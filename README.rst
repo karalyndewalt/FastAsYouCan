@@ -8,6 +8,8 @@ Overview
 
 As Fast As You Can is an individualized 18-week marathon training plan based on Jack Daniels' Running Formula and an earlier paper, `Oxygen Power <http://s3.amazonaws.com/zanran_storage/www.canibaisereis.com/ContentPages/2466959967.pdf.>`_ by Jack Daniels and Jimmy Glibert. This project was chosen as an exercise in object oriented design and data modeling.
 
+.. image:: static/FAYC-calendar.png
+
 JD uses the relationships between running velocity/VO2 demand, and running duration and the fraction of VO2max in his training design. 
 
 Here are examples of JD's tables: 

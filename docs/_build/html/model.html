@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>model module &mdash; AsFastAsYouCan 1.0 documentation</title>
+    <title>model module &mdash; Fast As You Can 1.0 documentation</title>
     
     <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -23,7 +23,10 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="AsFastAsYouCan 1.0 documentation" href="index.html" />
+    <link rel="top" title="Fast As You Can 1.0 documentation" href="index.html" />
+    <link rel="up" title="Python Modules" href="modules.html" />
+    <link rel="next" title="server module" href="server.html" />
+    <link rel="prev" title="calculator module" href="calculator.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
@@ -198,6 +201,7 @@ see python docs for additional datetime methods</p>
 <p>Returns x days of training as a list</p>
 <p>Uses user race.VDOT to determine distance of workouts, and remainder of
 peak mileage to assign distances to non-quality days.</p>
+<p>The lesser of two workouts my be selected for by passing workouts in as a tuple</p>
 <dl class="method">
 <dt id="model.Week.create_remaining_days">
 <code class="descname">create_remaining_days</code><span class="sig-paren">(</span><em>workouts</em><span class="sig-paren">)</span><a class="headerlink" href="#model.Week.create_remaining_days" title="Permalink to this definition">¶</a></dt>
@@ -216,8 +220,8 @@ peak mileage to assign distances to non-quality days.</p>
 <dt id="model.Workout">
 <em class="property">class </em><code class="descclassname">model.</code><code class="descname">Workout</code><span class="sig-paren">(</span><em>*segments</em><span class="sig-paren">)</span><a class="headerlink" href="#model.Workout" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
-<p>Returns tuple of segments</p>
-<p>a single workout is a tuple of segments
+<p>Return tuple of segments</p>
+<p>A single workout is a tuple of segments
 &#8216;quality days&#8217;, specific instructions for workouts with distance, time, pace attributes</p>
 <dl class="method">
 <dt id="model.Workout.final_segments">
@@ -250,6 +254,10 @@ peak mileage to assign distances to non-quality days.</p>
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
+  <li><a href="modules.html">Python Modules</a><ul>
+      <li>Previous: <a href="calculator.html" title="previous chapter">calculator module</a></li>
+      <li>Next: <a href="server.html" title="next chapter">server module</a></li>
+  </ul></li>
   </ul></li>
 </ul>
 </div>
@@ -278,7 +286,7 @@ peak mileage to assign distances to non-quality days.</p>
       <div class="clearer"></div>
     </div>
     <div class="footer">
-      &copy;2015, Kara DeWalt.
+      &copy;2015, KaraLyn DeWalt.
       
       |
       Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
