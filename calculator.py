@@ -3,7 +3,7 @@ import math
 
 
 def convert_distance_to_meters(distance, units):
-    """"From user input returns distance in meters
+    """Return distance in meters
 
     units passed through using radio buttons.
 
@@ -33,7 +33,7 @@ def convert_distance_to_meters(distance, units):
 
 
 def meters_to_miles(meters):
-    """Converts meters to miles
+    """Convert meters to miles
 
     >>> meters_to_miles(5000)
     3.106863683249034
@@ -44,7 +44,7 @@ def meters_to_miles(meters):
 
 
 def miles_to_meters(miles):
-    """Converts miles to meters
+    """Convert miles to meters
 
     >>> miles_to_meters(3.1)
     4988.954
@@ -55,7 +55,7 @@ def miles_to_meters(miles):
 
 
 def hours_to_minutes(hours):
-    """returns hours given minutes
+    """Return hours given minutes
 
     >>> hours_to_minutes(2)
     120
@@ -66,7 +66,7 @@ def hours_to_minutes(hours):
 
 
 def seconds_to_minutes(seconds):
-    """Returns minutes given seconds
+    """Return minutes given seconds
 
     >>> seconds_to_minutes(60)
     1.0
@@ -87,7 +87,7 @@ def seconds_to_minutes(seconds):
 
 
 def velocity(distance, time):
-    """Returns velocity
+    """Return velocity
 
     >>> velocity(1000, 5)
     200
@@ -112,7 +112,7 @@ def velocity(distance, time):
 
 
 def get_velocity_from_VO2(VO2):
-    """Returns velocity given VO2
+    """Return velocity given VO2
 
     >>> get_velocity_from_VO2(60)
     302.41418000000004
@@ -123,7 +123,7 @@ def get_velocity_from_VO2(VO2):
 
 
 def get_VO2_from_velocity(velocity):
-    """Returns VO2 give velocity
+    """Return VO2 give velocity
 
     >>> get_VO2_from_velocity(303)
     60.172309999999996
@@ -134,7 +134,7 @@ def get_VO2_from_velocity(velocity):
 
 
 def velocity_to_min_per_mile(velocity):
-    """"""
+    """Return minutes per mile"""
     pace = 1609.34 / velocity
     # pace is in min/mile; min is a decimal
     # seconds = int((pace * 60) % 60)

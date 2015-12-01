@@ -1,0 +1,296 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>model module &mdash; AsFastAsYouCan 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="AsFastAsYouCan 1.0 documentation" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-model">
+<span id="model-module"></span><h1>model module<a class="headerlink" href="#module-model" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="model.Pace">
+<em class="property">class </em><code class="descclassname">model.</code><code class="descname">Pace</code><span class="sig-paren">(</span><em>VDOT</em>, <em>intensity</em><span class="sig-paren">)</span><a class="headerlink" href="#model.Pace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Store paces Easy, Marathon, and Temo as range of percentages</p>
+<p>methods allow the range for each intensity to be returned as objects of
+pace class in velocity or minutes/mile</p>
+<dl class="attribute">
+<dt id="model.Pace.PACE_DICT">
+<code class="descname">PACE_DICT</code><em class="property"> = {'tempo': (0.83, 0.86, 0.89), 'marathon': (0.75, 0.79, 0.84), 'easy': (0.55, 0.65, 0.74)}</em><a class="headerlink" href="#model.Pace.PACE_DICT" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="model.Pace.convert_timedelta">
+<code class="descname">convert_timedelta</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#model.Pace.convert_timedelta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return list of pace times (low, avg, high) converted from timedelta object</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="model.Pace.pace_range">
+<code class="descname">pace_range</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#model.Pace.pace_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the range of times in minutes/mile for a given intensity</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="model.Pace.velocity">
+<code class="descname">velocity</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#model.Pace.velocity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return list of velocity (low, avg, high) in meters/minute for a given intensity</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="model.Race">
+<em class="property">class </em><code class="descclassname">model.</code><code class="descname">Race</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#model.Race" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">flask_sqlalchemy.Model</span></code></p>
+<p>Store user&#8217;s races</p>
+<dl class="method">
+<dt id="model.Race.VDOT">
+<code class="descname">VDOT</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#model.Race.VDOT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return user VDOT</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="model.Race.distance">
+<code class="descname">distance</code><a class="headerlink" href="#model.Race.distance" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="model.Race.race_id">
+<code class="descname">race_id</code><a class="headerlink" href="#model.Race.race_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="model.Race.time">
+<code class="descname">time</code><a class="headerlink" href="#model.Race.time" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="model.Race.user">
+<code class="descname">user</code><a class="headerlink" href="#model.Race.user" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="model.Race.user_id">
+<code class="descname">user_id</code><a class="headerlink" href="#model.Race.user_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="model.Segment">
+<em class="property">class </em><code class="descclassname">model.</code><code class="descname">Segment</code><span class="sig-paren">(</span><em>intensity</em>, <em>user</em>, <em>workout=None</em>, <em>rep=1</em>, <em>time=None</em>, <em>distance_in_miles=None</em>, <em>distance_as_percent=None</em>, <em>rest=None</em><span class="sig-paren">)</span><a class="headerlink" href="#model.Segment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Pace() and distance or time components of a workout</p>
+<dl class="method">
+<dt id="model.Segment.calc_distance">
+<code class="descname">calc_distance</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#model.Segment.calc_distance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return distance covered in a segment.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="model.Segment.show_segment">
+<code class="descname">show_segment</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#model.Segment.show_segment" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return tuple containing string representation of the segment, for user display</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="model.TrainingPlan">
+<em class="property">class </em><code class="descclassname">model.</code><code class="descname">TrainingPlan</code><span class="sig-paren">(</span><em>user</em><span class="sig-paren">)</span><a class="headerlink" href="#model.TrainingPlan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Return list of 18 Week objects for a user</p>
+<p>each Week object contains a tuple of Workout objects
+each Workout object contains a tuple of Segment objects</p>
+<dl class="method">
+<dt id="model.TrainingPlan.make_list_of_days">
+<code class="descname">make_list_of_days</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#model.TrainingPlan.make_list_of_days" title="Permalink to this definition">¶</a></dt>
+<dd><p>Makes list of the calendar datetime objects for the training_plan</p>
+<p>to return the day use datetime class attr: .day
+to return the YYYY_MM_DD (ISO 8601) format use instance method: .isoformat()
+see python docs for additional datetime methods</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="model.User">
+<em class="property">class </em><code class="descclassname">model.</code><code class="descname">User</code><span class="sig-paren">(</span><em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#model.User" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">flask_sqlalchemy.Model</span></code></p>
+<p>Run calculator user</p>
+<dl class="attribute">
+<dt id="model.User.email">
+<code class="descname">email</code><a class="headerlink" href="#model.User.email" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="model.User.greet">
+<code class="descname">greet</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#model.User.greet" title="Permalink to this definition">¶</a></dt>
+<dd><p>Greet using email</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="model.User.most_recent_race">
+<code class="descname">most_recent_race</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#model.User.most_recent_race" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return most recent Race object for a user</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="model.User.paces">
+<code class="descname">paces</code><span class="sig-paren">(</span><em>intensity</em><span class="sig-paren">)</span><a class="headerlink" href="#model.User.paces" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return object of Pace class</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="model.User.training_plan">
+<code class="descname">training_plan</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#model.User.training_plan" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return TrainingPlan based on user&#8217;s most recent race</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="model.User.user_id">
+<code class="descname">user_id</code><a class="headerlink" href="#model.User.user_id" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="model.User.weekly_mileage">
+<code class="descname">weekly_mileage</code><a class="headerlink" href="#model.User.weekly_mileage" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="model.Week">
+<em class="property">class </em><code class="descclassname">model.</code><code class="descname">Week</code><span class="sig-paren">(</span><em>user</em>, <em>percent_peak_mileage</em>, <em>plan</em>, <em>workouts</em>, <em>days=6</em><span class="sig-paren">)</span><a class="headerlink" href="#model.Week" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Returns x days of training as a list</p>
+<p>Uses user race.VDOT to determine distance of workouts, and remainder of
+peak mileage to assign distances to non-quality days.</p>
+<dl class="method">
+<dt id="model.Week.create_remaining_days">
+<code class="descname">create_remaining_days</code><span class="sig-paren">(</span><em>workouts</em><span class="sig-paren">)</span><a class="headerlink" href="#model.Week.create_remaining_days" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return dynamicaly-generated remaining training days</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="model.Week.show_week">
+<code class="descname">show_week</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#model.Week.show_week" title="Permalink to this definition">¶</a></dt>
+<dd><p>String representation of week distance. For user display</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="model.Workout">
+<em class="property">class </em><code class="descclassname">model.</code><code class="descname">Workout</code><span class="sig-paren">(</span><em>*segments</em><span class="sig-paren">)</span><a class="headerlink" href="#model.Workout" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<p>Returns tuple of segments</p>
+<p>a single workout is a tuple of segments
+&#8216;quality days&#8217;, specific instructions for workouts with distance, time, pace attributes</p>
+<dl class="method">
+<dt id="model.Workout.final_segments">
+<code class="descname">final_segments</code><span class="sig-paren">(</span><em>segments</em><span class="sig-paren">)</span><a class="headerlink" href="#model.Workout.final_segments" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the less of two segments when tuple passed for segment</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="model.Workout.show_workout">
+<code class="descname">show_workout</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#model.Workout.show_workout" title="Permalink to this definition">¶</a></dt>
+<dd><p>String representation of workout distance. For user display</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="model.connect_to_db">
+<code class="descclassname">model.</code><code class="descname">connect_to_db</code><span class="sig-paren">(</span><em>app</em><span class="sig-paren">)</span><a class="headerlink" href="#model.connect_to_db" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect to the database.</p>
+</dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/model.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Kara DeWalt.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+      |
+      <a href="_sources/model.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

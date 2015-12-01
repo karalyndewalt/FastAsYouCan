@@ -1,0 +1,232 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>calculator module &mdash; AsFastAsYouCan 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="AsFastAsYouCan 1.0 documentation" href="index.html" />
+   
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
+
+  </head>
+  <body role="document">  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="module-calculator">
+<span id="calculator-module"></span><h1>calculator module<a class="headerlink" href="#module-calculator" title="Permalink to this headline">¶</a></h1>
+<dl class="function">
+<dt id="calculator.convert_distance_to_meters">
+<code class="descclassname">calculator.</code><code class="descname">convert_distance_to_meters</code><span class="sig-paren">(</span><em>distance</em>, <em>units</em><span class="sig-paren">)</span><a class="headerlink" href="#calculator.convert_distance_to_meters" title="Permalink to this definition">¶</a></dt>
+<dd><p>&#8220;From user input returns distance in meters</p>
+<p>units passed through using radio buttons.</p>
+<p>convert kilometers to meters
+&gt;&gt;&gt; convert_distance_to_meters(5, &#8220;kilometers&#8221;)
+5000</p>
+<p>convert miles to meters
+&gt;&gt;&gt; convert_distance_to_meters(1, &#8220;miles&#8221;)
+1609.34</p>
+<p>should leave meters alone
+&gt;&gt;&gt; convert_distance_to_meters(10000, &#8220;meters&#8221;)
+10000</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="calculator.get_VO2_from_velocity">
+<code class="descclassname">calculator.</code><code class="descname">get_VO2_from_velocity</code><span class="sig-paren">(</span><em>velocity</em><span class="sig-paren">)</span><a class="headerlink" href="#calculator.get_VO2_from_velocity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns VO2 give velocity</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">get_VO2_from_velocity</span><span class="p">(</span><span class="mi">303</span><span class="p">)</span>
+<span class="go">60.172309999999996</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="calculator.get_percent_VO2max">
+<code class="descclassname">calculator.</code><code class="descname">get_percent_VO2max</code><span class="sig-paren">(</span><em>time</em><span class="sig-paren">)</span><a class="headerlink" href="#calculator.get_percent_VO2max" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns perctenage of VO2max</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">get_percent_VO2max</span><span class="p">(</span><span class="mi">9</span><span class="p">)</span>
+<span class="go">1.0213666896324893</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="calculator.get_velocity_from_VO2">
+<code class="descclassname">calculator.</code><code class="descname">get_velocity_from_VO2</code><span class="sig-paren">(</span><em>VO2</em><span class="sig-paren">)</span><a class="headerlink" href="#calculator.get_velocity_from_VO2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns velocity given VO2</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">get_velocity_from_VO2</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span>
+<span class="go">302.41418000000004</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="calculator.hours_to_minutes">
+<code class="descclassname">calculator.</code><code class="descname">hours_to_minutes</code><span class="sig-paren">(</span><em>hours</em><span class="sig-paren">)</span><a class="headerlink" href="#calculator.hours_to_minutes" title="Permalink to this definition">¶</a></dt>
+<dd><p>returns hours given minutes</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">hours_to_minutes</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">120</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="calculator.meters_to_miles">
+<code class="descclassname">calculator.</code><code class="descname">meters_to_miles</code><span class="sig-paren">(</span><em>meters</em><span class="sig-paren">)</span><a class="headerlink" href="#calculator.meters_to_miles" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts meters to miles</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">meters_to_miles</span><span class="p">(</span><span class="mi">5000</span><span class="p">)</span>
+<span class="go">3.106863683249034</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="calculator.miles_to_meters">
+<code class="descclassname">calculator.</code><code class="descname">miles_to_meters</code><span class="sig-paren">(</span><em>miles</em><span class="sig-paren">)</span><a class="headerlink" href="#calculator.miles_to_meters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Converts miles to meters</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">miles_to_meters</span><span class="p">(</span><span class="mf">3.1</span><span class="p">)</span>
+<span class="go">4988.954</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="calculator.seconds_to_minutes">
+<code class="descclassname">calculator.</code><code class="descname">seconds_to_minutes</code><span class="sig-paren">(</span><em>seconds</em><span class="sig-paren">)</span><a class="headerlink" href="#calculator.seconds_to_minutes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns minutes given seconds</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">seconds_to_minutes</span><span class="p">(</span><span class="mi">60</span><span class="p">)</span>
+<span class="go">1.0</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">seconds_to_minutes</span><span class="p">(</span><span class="mi">50</span><span class="p">)</span>
+<span class="go">0.8333333333333334</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">seconds_to_minutes</span><span class="p">(</span><span class="mi">90</span><span class="p">)</span>
+<span class="go">1.5</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="calculator.user_VDOT">
+<code class="descclassname">calculator.</code><code class="descname">user_VDOT</code><span class="sig-paren">(</span><em>distance</em>, <em>units</em>, <em>time</em><span class="sig-paren">)</span><a class="headerlink" href="#calculator.user_VDOT" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns user VO2max</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">user_VDOT</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="s">&quot;kilometers&quot;</span><span class="p">,</span> <span class="mi">35</span><span class="p">)</span>
+<span class="go">60.54544105206188</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">user_VDOT</span><span class="p">(</span><span class="mi">5000</span><span class="p">,</span> <span class="s">&quot;meters&quot;</span><span class="p">,</span> <span class="mi">17</span><span class="p">)</span>
+<span class="go">60.160686884379935</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">user_VDOT</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s">&quot;miles&quot;</span><span class="p">,</span> <span class="mf">10.5</span><span class="p">)</span>
+<span class="go">60.741639616661146</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="calculator.velocity">
+<code class="descclassname">calculator.</code><code class="descname">velocity</code><span class="sig-paren">(</span><em>distance</em>, <em>time</em><span class="sig-paren">)</span><a class="headerlink" href="#calculator.velocity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns velocity</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">velocity</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="go">200</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">velocity</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="go">0</span>
+</pre></div>
+</div>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">velocity</span><span class="p">(</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="gt">Traceback (most recent call last):</span>
+    <span class="o">...</span>
+<span class="gr">ZeroDivisionError</span>: <span class="n">integer division or modulo by zero</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="calculator.velocity_to_min_per_mile">
+<code class="descclassname">calculator.</code><code class="descname">velocity_to_min_per_mile</code><span class="sig-paren">(</span><em>velocity</em><span class="sig-paren">)</span><a class="headerlink" href="#calculator.velocity_to_min_per_mile" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/calculator.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2015, Kara DeWalt.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.3.1</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.6</a>
+      
+      |
+      <a href="_sources/calculator.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
